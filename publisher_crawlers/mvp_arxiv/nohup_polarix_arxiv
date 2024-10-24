@@ -1,0 +1,1367 @@
+nohup: ignoring input
+Attempt 1
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 299.989
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9ce2b3 <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55b0bbc6c6aa <unknown>
+#1 0x55b0bb93d600 <unknown>
+#2 0x55b0bb925563 <unknown>
+#3 0x55b0bb925252 <unknown>
+#4 0x55b0bb92356c <unknown>
+#5 0x55b0bb923a5f <unknown>
+#6 0x55b0bb9335cb <unknown>
+#7 0x55b0bb949964 <unknown>
+#8 0x55b0bb94effb <unknown>
+#9 0x55b0bb92416e <unknown>
+#10 0x55b0bb9497bb <unknown>
+#11 0x55b0bb9cdf0f <unknown>
+#12 0x55b0bb9af643 <unknown>
+#13 0x55b0bb97fd31 <unknown>
+#14 0x55b0bb98079e <unknown>
+#15 0x55b0bbc3423b <unknown>
+#16 0x55b0bbc381d2 <unknown>
+#17 0x55b0bbc215f5 <unknown>
+#18 0x55b0bbc38d62 <unknown>
+#19 0x55b0bbc0623f <unknown>
+#20 0x55b0bbc5be48 <unknown>
+#21 0x55b0bbc5c020 <unknown>
+#22 0x55b0bbc6b47c <unknown>
+#23 0x7f96fc71d6ea start_thread
+
+Traceback (most recent call last):
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 17, in <module>
+    main(args.modulo)
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 10, in main
+    outlist = arx.get_arxiv_articles_with_html(query=search_word, max_results=100, download=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/mvp_arxiv_utils.py", line 178, in get_arxiv_articles_with_html
+    result.download_pdf(dirpath=pdf_path, filename=(file_stem + '.pdf'))
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/site-packages/arxiv/__init__.py", line 212, in download_pdf
+    written_path, _ = urlretrieve(self.pdf_url, path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 241, in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 525, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+Script succeeded.
+Attempt 2
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 299.157
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e1553372b3 <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Error storing /eagle/projects/argonne_tpc/siebenschuh/aurora_gpt/raw_data/arxiv/html/.html, error Message: timeout: Timed out receiving message from renderer: 300.000
+  (Session info: chrome-headless-shell=127.0.6533.99)
+Stacktrace:
+#0 0x55e1555d56aa <unknown>
+#1 0x55e1552a6600 <unknown>
+#2 0x55e15528e563 <unknown>
+#3 0x55e15528e252 <unknown>
+#4 0x55e15528c56c <unknown>
+#5 0x55e15528ca5f <unknown>
+#6 0x55e15529c5cb <unknown>
+#7 0x55e1552b2964 <unknown>
+#8 0x55e1552b7ffb <unknown>
+#9 0x55e15528d16e <unknown>
+#10 0x55e1552b27bb <unknown>
+#11 0x55e155336f0f <unknown>
+#12 0x55e155318643 <unknown>
+#13 0x55e1552e8d31 <unknown>
+#14 0x55e1552e979e <unknown>
+#15 0x55e15559d23b <unknown>
+#16 0x55e1555a11d2 <unknown>
+#17 0x55e15558a5f5 <unknown>
+#18 0x55e1555a1d62 <unknown>
+#19 0x55e15556f23f <unknown>
+#20 0x55e1555c4e48 <unknown>
+#21 0x55e1555c5020 <unknown>
+#22 0x55e1555d447c <unknown>
+#23 0x7f4b31c236ea start_thread
+
+Traceback (most recent call last):
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 17, in <module>
+    main(args.modulo)
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 10, in main
+    outlist = arx.get_arxiv_articles_with_html(query=search_word, max_results=100, download=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/mvp_arxiv_utils.py", line 178, in get_arxiv_articles_with_html
+    result.download_pdf(dirpath=pdf_path, filename=(file_stem + '.pdf'))
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/site-packages/arxiv/__init__.py", line 212, in download_pdf
+    written_path, _ = urlretrieve(self.pdf_url, path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 241, in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 525, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 404: Not Found
+Script succeeded.
+Attempt 3
+Traceback (most recent call last):
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 17, in <module>
+    main(args.modulo)
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/run_arxiv_scraper.py", line 10, in main
+    outlist = arx.get_arxiv_articles_with_html(query=search_word, max_results=100, download=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/siebenschuh/Projects/dataprep/code/mvp_arxiv/mvp_arxiv_utils.py", line 178, in get_arxiv_articles_with_html
+    result.download_pdf(dirpath=pdf_path, filename=(file_stem + '.pdf'))
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/site-packages/arxiv/__init__.py", line 212, in download_pdf
+    written_path, _ = urlretrieve(self.pdf_url, path)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 241, in urlretrieve
+    with contextlib.closing(urlopen(url, data)) as fp:
+                            ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 525, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 634, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 563, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/eagle/projects/tpc/siebenschuh/envs_/bo/lib/python3.11/urllib/request.py", line 643, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 500: Internal Server Error
+Script succeeded.
+Attempt 4
+launcher_exp.sh: line 11: 2022920 Killed                  python run_arxiv_scraper.py -m 0
+Script succeeded.
+Attempt 5

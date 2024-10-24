@@ -1,0 +1,21 @@
+id,title,pdf_url,html_url,summary,comment,date_published,date_updated,doi,prim_cat,categories,journal_ref
+http://arxiv.org/abs/2408.02655v1,Local ergotropy and its fluctuations across a dissipative quantum phase transition,http://arxiv.org/pdf/2408.02655v1.pdf,http://arxiv.org/html/2408.02655v1,"We investigate a two-qubit open Rabi model, focusing on local ergotropy - the
+maximum extractable work by acting solely on the two qubits - within a
+parameter regime where a Berezinskii-Kosterlitz-Thouless dissipative phase
+transition occurs. First, we aim to define a protocol for charging, storing,
+and discharging the two-qubit system, interpreted as the working principle of
+an open quantum battery. Second, we examine the impact of the phase transition
+on ergotropy and identify potential markers. To achieve these goals, we
+construct an ad-hoc charging unitary operator, leveraging our knowledge of the
+ground state near the transition to bring it into a decoherence-free state
+during storage. Using advanced numerical techniques based on matrix product
+state representation, we reveal that high couplings to an external bath
+approximately double the local ergotropy immediately post-charging. Over time
+we observe oscillatory behaviors in ergotropy and its fluctuations, which
+undergo significant changes near the transition, signaling its occurrence.
+Furthermore, we optimize local ergotropy over time using a physically inspired
+ansatz, enabling continuous work extraction (local ergotropy never reaches
+zero). Our work proposes a tunable, experimentally realizable protocol for work
+extraction, leveraging decoherence-free states and phase transitions.
+Additionally, it sheds light on the complex interaction between ergotropy and
+quantum phase transitions.","10 pages with 5 figures, and 5 appendices with 2 figures",2024-08-05 17:40:43+00:00,2024-08-05 17:40:43+00:00,,quant-ph,,

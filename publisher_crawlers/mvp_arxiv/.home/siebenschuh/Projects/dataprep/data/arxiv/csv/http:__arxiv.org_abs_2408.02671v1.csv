@@ -1,0 +1,18 @@
+id,title,pdf_url,html_url,summary,comment,date_published,date_updated,doi,prim_cat,categories,journal_ref
+http://arxiv.org/abs/2408.02671v1,Systematic bias due to mismodelling precessing binary black hole ringdown,http://arxiv.org/pdf/2408.02671v1.pdf,http://arxiv.org/html/2408.02671v1,"Accurate waveform modelling is crucial for parameter estimation in
+gravitational wave astronomy, impacting our understanding of source properties
+and the testing of general relativity. The precession of orbital and spin
+angular momenta in binary black hole (BBH) systems with misaligned spins
+presents a complex challenge for gravitational waveform modelling. Current
+precessing BBH waveform models employ a co-precessing frame, which precesses
+along with the binary. In this paper, we investigate a source of bias stemming
+from the mismodelling of ringdown frequency in the co-precessing frame. We find
+that this mismodelling of the co-precessing frame ringdown frequency introduces
+systematic biases in parameter estimation, for high mass systems in particular,
+and in the Inspiral-Merger-Ringdown (IMR)-consistency test of general
+relativity. Employing the waveform model IMRPhenomXPHM, we conduct an
+IMR-consistency test using a Fisher matrix analysis across parameter space, as
+well as full injected signal parameter estimation studies. Our results show
+that this mismodelling particularly affects BBH systems with high mass ratios,
+high spin magnitudes, and highly inclined spins. These findings suggest
+inconsistencies for all waveform models which do not address this issue.","16 pages, 5 figures",2024-08-05 17:59:45+00:00,2024-08-05 17:59:45+00:00,,gr-qc,,
