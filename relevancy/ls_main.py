@@ -16,12 +16,14 @@ parser.add_argument("--template", type=str, help="The question you want to ask."
 parser.add_argument("--terms", nargs="+", help="List of items", 
         default=["WHSC1", "RTCB", "WRN", "P2X7", "NLRP3", "CSF1R", "ALKBH1", "NMNAT2", "NSUN2", "RTCB"])
 parser.add_argument("--retmax", type=int, default=20, help="The maximum number of papers to download.")
+parser.add_argument("--delete", action="store_true", help="Delete pdf if not relevant")
 
 # Parse arguments
 args     = parser.parse_args()
 retmax   = args.retmax
 template = args.template
 terms    = args.terms
+delete   = args.delete
 
 def main():
 
@@ -50,7 +52,7 @@ def main():
                 print(f'Is the paper relevant to the question: {question}')
                 print(f'Answer: {answer}')
 
-                if answer.lower().startswith('no'):
+                if answer.lower().startswith('no') and delete = True:
                     os.remove(f'{pmid}.pdf')
 
                 sleep(10)
