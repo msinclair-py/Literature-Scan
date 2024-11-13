@@ -43,7 +43,7 @@ def get_pmcids(term, retmax=20):
     return arr
 
 def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=20):
-    
+    sleep(1)
     if title_only:
         term_query = f'({term}[Title] AND {partner}[Title])'
     elif abstract_only:
