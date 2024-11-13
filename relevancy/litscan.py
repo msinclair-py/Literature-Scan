@@ -143,8 +143,6 @@ def is_pdf_relevant(pdf_filename, question):
 
     chat_response = client.chat.completions.create(
         model="meta-llama/Meta-Llama-3.1-70B-Instruct",
-        # logprobs=1,
-        # top_logprobs=1,
         messages=[
             {"role": "user", "content": f"Given the following content from a scientific paper, \
             is it relevant to answering the question: '{question}'? \

@@ -5,8 +5,7 @@ from litscan import get_pdf
 from litscan import get_pmcids
 
 import os
-import time
-
+from time import sleep
 
 
 
@@ -56,7 +55,7 @@ def main():
                 for interaction in interactions:
                     term_and_interaction = f'{term}+AND+{interaction}'
                     interaction_pmids = get_pmcids(term_and_interaction, retmax=retmax)
-                    print(f"Found {len(interaction_pmids)} PMIDs for gene {term_and_interaction}") #: {interaction_pmids}")
+                    print(f"Found {len(interaction_pmids)} PMIDs for gene {term_and_interaction}")
                     pmids.extend(interaction_pmids)
                     print(f"Total PMIDs: {len(pmids)}")
 
@@ -76,33 +75,42 @@ def main():
             for pmid in pmids:
                 get_pdf(pmid)
 
-    
-    '''
-
-        #question = f"What is the role of the gene {term}?"
-        question = template.format(term)
-
+        # Determine the relevancy 
+        # question = f"What is the role of the gene {term}?"
+        # question = f"What is the role of the gene {interaction}?"
         for pmid in pmids:
             print("\n")
 
             get_pdf(pmid)
             if os.path.exists(f'{pmid}.pdf') == False:
-                continue  # Skip to the next pmid if the PDF does not exist
+                print(f'file {pmid}.pdf does not exist')
+                # continue  # Skip to the next pmid if the PDF does not exist
             
+            if interactions:
+                for interaction in interactions:
+                    question = template.format(interaction)
+                    chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
+                    if chat_response is None:
+                        print (f"chat response {chat_response} does not contain choices")
+                    else:
+                        answer = chat_response.choices[0].message.content
+                        print(f'Is the paper relevant to the question: {question}')
+                        print(f'Answer: {answer}')
+                        if answer.lower().startswith('no') and no_delete == False:
+                            os.remove(f'{pmid}.pdf')
+
+            question = template.format(term)
             chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
             if chat_response is None:
                 print (f"chat response {chat_response} does not contain choices")
             else:
                 answer = chat_response.choices[0].message.content
-
                 print(f'Is the paper relevant to the question: {question}')
                 print(f'Answer: {answer}')
-
                 if answer.lower().startswith('no') and no_delete == False:
                     os.remove(f'{pmid}.pdf')
 
             sleep(10)
-    '''
 
 if __name__ == "__main__":
     main()
