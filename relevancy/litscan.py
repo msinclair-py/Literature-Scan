@@ -42,6 +42,35 @@ def get_pmcids(term, retmax=20):
 
     return arr
 
+def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=20):
+    
+    if title_only:
+        term_query = f'({term}[Title] AND {partner}[Title])'
+    elif abstract_only:
+        term_query = f'({term}[Abstract]) AND {partner}[Abstract])'
+    else:
+        term_query = f'(({term}[Title] OR {term}[Abstract]) AND ({partner}[Title] OR {partner}[Abstract]))'
+    
+    url = (f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
+           f'db=pmc&'
+           f'term={term_query}'
+           f'+AND+free+fulltext%5bfilter%5d&'
+           f'retmode=json&'
+           f'retmax={retmax}')
+    
+    print(f'get_pmcids_for_term_and_partner url: {url}')
+    response = requests.get(url)
+    if response.status_code == 200:
+        json_response = response.json()
+        if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
+            arr = json_response['esearchresult']['idlist']
+        else:
+            arr = []
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        arr = []
+    return arr
+
 def find_similar_papers(pmid, api_key=None):
     # Function to find similar papers using elink
     sleep(1)
@@ -320,3 +349,18 @@ if __name__ == "__main__":
     for i, item in enumerate(interaction_data):
             #print(f'item {i}: {item}')
             print(f'item {i}: {item["preferredName_B"]}')
+
+
+    for target, partner in ([['WRN', 'DNA2']]):
+        pmids = get_pmcids_for_term_and_partner(target, partner, title_only=True)
+        print(f'{target} AND {partner} (title only): {pmids}, {len(pmids)}')
+        sleep(1)
+        pmids = get_pmcids_for_term_and_partner(target, partner, abstract_only=True)
+        print(f'{target} AND {partner} (abstract only): {pmids}, {len(pmids)}')
+        sleep(1)
+        pmids = get_pmcids_for_term_and_partner(target, partner)
+        print(f'{target} AND {partner} (title and abstract): {pmids}, {len(pmids)}')
+        sleep(1)
+
+
+
