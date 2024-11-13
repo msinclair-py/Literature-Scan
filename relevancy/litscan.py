@@ -20,15 +20,13 @@ def get_pmcids(term, retmax=20):
     sleep(1)
     url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
     
-    # url = url + f'db=pmc&term={term}[Title/Abstract]&retmode=json&retmax={retmax}'
     url = url + f'db=pmc&term={term}[Title/Abstract]+AND+free+fulltext%5bfilter%5d&retmode=json&retmax={retmax}'
-    print(f'get_pmcids url: {url}')
+    # print(f'get_pmcids url: {url}')
     response = requests.get(url, ) #headers=headers, data=data)
 
     # Check if the request was successful (status code 200)
     if response.status_code == 200:
-        # Print the response
-        print(f'The response is {response}')
+        # print(f'The response is {response}')
         json_response = response.json()
         if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
             arr = json_response['esearchresult']['idlist']
@@ -58,7 +56,7 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
            f'retmode=json&'
            f'retmax={retmax}')
     
-    print(f'get_pmcids_for_term_and_partner url: {url}')
+    # print(f'get_pmcids_for_term_and_partner url: {url}')
     response = requests.get(url)
     if response.status_code == 200:
         json_response = response.json()
@@ -210,13 +208,13 @@ def get_string_id(protein_name):
     output_format = "json"
     optional_parameters = ""
     protein_query_url = f"https://string-db.org/api/{output_format}/get_string_ids?identifiers={your_identifiers}&{optional_parameters}"
-    print(f'protein_query_url: {protein_query_url}')
+    # print(f'protein_query_url: {protein_query_url}')
 
     try:
         # Get protein ID from STRING
         response = requests.get(protein_query_url)
-        print(f'response: {response}')
-        print(f'response.content: {response.content}')
+        # print(f'response: {response}')
+        # print(f'response.content: {response.content}')
 
         response.raise_for_status()
         protein_data = response.json()
@@ -249,7 +247,7 @@ def get_string_publications_by_id(string_id):
     output_format = "json"
     optional_parameters = ""
     publications_url = "UNKNOWN"
-    print(f'publications_url: {publications_url}')
+    # print(f'publications_url: {publications_url}')
 
     try:
         pub_response = requests.get(publications_url)
@@ -275,7 +273,7 @@ def get_string_functional_annotation(protein_name):
     output_format = "json"
     optional_parameters = ""
     functional_url = f"https://string-db.org/api/{output_format}/functional_annotation?identifiers={protein_name}&{optional_parameters}"
-    print(f'functional_url: {functional_url}')
+    # print(f'functional_url: {functional_url}')
 
     try:
         response = requests.get(functional_url)
@@ -306,7 +304,7 @@ def get_string_interaction_partners(protein_name, limit=10):
     output_format = "json"
     optional_parameters = f"limit={limit}"
     interaction_url = f"https://string-db.org/api/{output_format}/interaction_partners?identifiers={protein_name}&{optional_parameters}"
-    print(f'interaction_url: {interaction_url}')
+    # print(f'interaction_url: {interaction_url}')
 
     try:
         response = requests.get(interaction_url)
