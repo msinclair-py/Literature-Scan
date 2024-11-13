@@ -1,8 +1,9 @@
 
 from litscan import get_string_interaction_partners
-from litscan import is_pdf_relevant
-from litscan import get_pdf
 from litscan import get_pmcids
+from litscan import get_pmcids_for_term_and_partner
+from litscan import get_pdf
+from litscan import is_pdf_relevant
 
 import os
 from time import sleep
@@ -33,7 +34,6 @@ get_partners = args.get_partners
 
 # For testing
 get_partners = True
-terms = ["WRN"]
 
 def main():
 
@@ -55,21 +55,23 @@ def main():
             if partners:
                 for partner in partners:
 
-                    # construct the search term
-                    term_and_partner = f'{term}+AND+{partner}'
                     # get the PMIDs
-                    term_and_partner_pmids = get_pmcids(term_and_partner, retmax=retmax)
+                    term_and_partner_pmids = get_pmcids_for_term_and_partner(term, partner, retmax=retmax)
+
                     # add the PMIDs to the list
                     if term_and_partner_pmids:
                         pmids.extend(term_and_partner_pmids)
-                    # associate the PMIDs with the partner
+                    
+                    # associate the PMIDs with the partner.
+                    # the term (target) is known, we in a foreach term outter loop.
+                    # the partner is known, and with this term and partner we get pmids.
+                    # so,the partner_dict has the partner as the key with associated pmids.
+                    # this is for one term many partners.
                     partner_dict[partner] = term_and_partner_pmids
-
-                    print(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term_and_partner}")
-                    print(f"Total PMIDs: {len(pmids)}")
+                    print(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
 
                 else:
-                    print(f"No PMIDs found for {term_and_partner}")
+                    print(f"No PMIDs found for {term} and {partner}")
             else:
                 print(f"No partners found for {term}")
 
@@ -113,20 +115,63 @@ def main():
                 # Find which partner's PMIDs contain this pmid
                 matching_partner = None
                 for p, pmid_list in partner_dict.items():
+                    # im in an outter loop on pmid in pmids,
+                    # which itself is in an outter loop on term in terms
                     if pmid in pmid_list:
                         matching_partner = p
-                        question = template.format(matching_partner)
-                        chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
+                        score = 0
+
+                        sleep(10)
+                        question1 = template.format(term)
+
+                        # <snip>
+                        chat_response = is_pdf_relevant(f"{pmid}.pdf", question1)
                         if chat_response is None:
                             print (f"chat response {chat_response} does not contain choices")
                         else:
                             answer = chat_response.choices[0].message.content
-                            print(f'Is the paper relevant to the question: {question}')
+                            print(f'Is {pmid}.pdf relevant to the question1: {question1}')
                             print(f'Answer: {answer}')
-                            if answer.lower().startswith('no') and no_delete == False:
-                                os.remove(f'{pmid}.pdf')
 
-            sleep(10)
+                            if answer.lower().startswith('no'):
+                                score = score - 1
+                            else:
+                                score = score + 1
+                            print(f'score {score}')
+                            if score == 2:
+                                sleep 10
+                                question3 = f"What, if any, physical interactions occure between {term} and {matching_partner}"
+                                chat_response = is_pdf_relevant(f"{pmid}.pdf", question3)
+                                if chat_response is None:
+                                    print (f"chat response {chat_response} does not contain choices")
+                                else:
+                                    answer = chat_response.choices[0].message.content
+                                    print(f'Is {pmid}.pdf relevant to the question1: {question3}')
+                                    print(f'Answer: {answer}')
+
+                                    # </snip\>
+
+                        sleep (10)                        
+                        question2 = template.format(matching_partner)
+                        chat_response = is_pdf_relevant(f"{pmid}.pdf", question2)
+                        if chat_response is None:
+                            print (f"chat response {chat_response} does not contain choices")
+                        else:
+                            answer = chat_response.choices[0].message.content
+                            print(f'Is {pmid}.pdf relevant to the question2: {question2}')
+                            print(f'Answer: {answer}')
+
+                            if answer.lower().startswith('no'):
+                                score = score - 1
+                            else:
+                                score = score + 1    
+                            print(f'score {score}')
+
+                        if score == -2 and no_delete == False:
+                            print(f'removing {pmid}.pdf')
+                            os.remove(f'{pmid}.pdf')
+
+
 
 if __name__ == "__main__":
     main()
