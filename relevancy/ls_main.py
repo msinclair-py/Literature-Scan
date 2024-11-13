@@ -23,7 +23,7 @@ args     = parser.parse_args()
 retmax   = args.retmax
 template = args.template
 terms    = args.terms
-no_delete   = args.no-delete
+no_delete   = args.no_delete
 
 def main():
 
@@ -52,7 +52,7 @@ def main():
                 print(f'Is the paper relevant to the question: {question}')
                 print(f'Answer: {answer}')
 
-                if answer.lower().startswith('no') and no_delete = False:
+                if answer.lower().startswith('no') and no_delete == False:
                     os.remove(f'{pmid}.pdf')
 
                 sleep(10)
