@@ -124,11 +124,15 @@ def get_pdf(pmcid):
 # tools
 def is_pdf_relevant(pdf_filename, question):
 
-    print(f'Asking if {pdf_filename} is relevant')
-    if os.stat(pdf_filename).st_size == 0:
-        print(f"The file {pdf_filename} is empty. It is being deleted")
-        os.remove(pdf_filename)
-        return
+    try:
+        if os.stat(pdf_filename).st_size == 0:
+            print(f"The file {pdf_filename} is empty. It is being deleted")
+            os.remove(pdf_filename)
+            return None
+    except FileNotFoundError:
+        print(f"The file {pdf_filename} does not exist")
+        return None
+
     with open(pdf_filename, 'rb') as file:
         pdf_reader = PyPDF2.PdfReader(file)
         content = ""
