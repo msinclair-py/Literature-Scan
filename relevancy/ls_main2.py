@@ -21,7 +21,7 @@ parser.add_argument("--template", type=str, help="The question you want to ask."
 parser.add_argument("--terms", nargs="+", help="List of items", 
         default=["WHSC1", "RTCB", "WRN", "P2X7", "NLRP3", "CSF1R", "ALKBH1", "NMNAT2", "NSUN2", "RTCB"])
 parser.add_argument("--retmax", type=int, default=20, help="The maximum number of papers to download.")
-parser.add_argument("--no_delete", action="store_true", help="Delete pdf if not relevant")
+parser.add_argument("--no_delete", action="store_true", help="If set, do not delete pdf if not relevant")
 parser.add_argument("--get_partners", action="store_true", default=False, help="Use partner data")
 
 # Parse arguments
@@ -33,7 +33,7 @@ no_delete   = args.no_delete
 get_partners = args.get_partners
 
 # For testing
-get_partners = True
+# get_partners = True
 
 def main():
 
