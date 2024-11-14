@@ -21,7 +21,7 @@ parser.add_argument("--template", type=str, help="The question you want to ask."
 parser.add_argument("--terms", nargs="+", help="List of items", 
         default=["WHSC1", "RTCB", "WRN", "P2X7", "NLRP3", "CSF1R", "ALKBH1", "NMNAT2", "NSUN2", "RTCB"])
 parser.add_argument("--retmax", type=int, default=20, help="The maximum number of papers to download.")
-parser.add_argument("--no-delete", action="store_false", help="Delete pdf if not relevant")
+parser.add_argument("--no_delete", action="store_true", help="Delete pdf if not relevant")
 parser.add_argument("--get_partners", action="store_true", default=False, help="Use partner data")
 
 # Parse arguments
@@ -45,11 +45,14 @@ def main():
         # Get pmids for term AND each partner
         if get_partners == True:
             partners=[]
-            partner_data = get_string_interaction_partners(term, limit=10)
+            partner_data = get_string_interaction_partners(term, limit=50)
             for i, item in enumerate(partner_data):
                 partner = item["preferredName_B"]
                 print(f'{i}\t{item["preferredName_A"]}\t{item["preferredName_B"]}\t{item["score"]}')
-                partners.append(partner)
+
+                # THIS IS BEING SET ARBITRARILY
+                if item["score"] > 0.925:
+                    partners.append(partner)
 
             # Get PMIDs for term AND partners
             if partners:
@@ -98,7 +101,11 @@ def main():
             get_pdf(pmid)
             if os.path.exists(f'{pmid}.pdf') == False:
                 print(f'file {pmid}.pdf does not exist')
-                # continue  # Skip to the next pmid if the PDF does not exist
+                continue  # Skip to the next pmid if the PDF does not exist
+            
+
+
+
             
             if get_partners == False:
                 question = template.format(term)
@@ -111,6 +118,7 @@ def main():
                     print(f'Answer: {answer}')
                     if answer.lower().startswith('no') and no_delete == False:
                         os.remove(f'{pmid}.pdf')
+            
             else:
                 # Find which partner's PMIDs contain this pmid
                 matching_partner = None
@@ -121,7 +129,7 @@ def main():
                         matching_partner = p
                         score = 0
 
-                        sleep(10)
+                        #sleep(10)
                         question1 = template.format(term)
 
                         # <snip>
@@ -132,27 +140,16 @@ def main():
                             answer = chat_response.choices[0].message.content
                             print(f'Is {pmid}.pdf relevant to the question1: {question1}')
                             print(f'Answer: {answer}')
-
+                        # </snip>
                             if answer.lower().startswith('no'):
                                 score = score - 1
                             else:
                                 score = score + 1
-                            print(f'score {score}')
-                            if score == 2:
-                                sleep 10
-                                question3 = f"What, if any, physical interactions occure between {term} and {matching_partner}"
-                                chat_response = is_pdf_relevant(f"{pmid}.pdf", question3)
-                                if chat_response is None:
-                                    print (f"chat response {chat_response} does not contain choices")
-                                else:
-                                    answer = chat_response.choices[0].message.content
-                                    print(f'Is {pmid}.pdf relevant to the question1: {question3}')
-                                    print(f'Answer: {answer}')
+                            
 
-                                    # </snip\>
-
-                        sleep (10)                        
+                        #sleep (10)                        
                         question2 = template.format(matching_partner)
+                        # <snip>
                         chat_response = is_pdf_relevant(f"{pmid}.pdf", question2)
                         if chat_response is None:
                             print (f"chat response {chat_response} does not contain choices")
@@ -160,16 +157,31 @@ def main():
                             answer = chat_response.choices[0].message.content
                             print(f'Is {pmid}.pdf relevant to the question2: {question2}')
                             print(f'Answer: {answer}')
-
+                        #<\snip>
                             if answer.lower().startswith('no'):
                                 score = score - 1
                             else:
-                                score = score + 1    
-                            print(f'score {score}')
+                                score = score + 1
 
-                        if score == -2 and no_delete == False:
+                        print(f'score {score}')
+                        if (score == -2) and (no_delete == False):
                             print(f'removing {pmid}.pdf')
                             os.remove(f'{pmid}.pdf')
+
+                        if score == 2:
+                            #sleep(10)
+                            question3 = f"What, if any, physical interactions occure between {term} and {matching_partner}"
+
+                            # <snip>
+                            chat_response = is_pdf_relevant(f"{pmid}.pdf", question3)
+                            if chat_response is None:
+                                print (f"chat response {chat_response} does not contain choices")
+                            else:
+                                answer = chat_response.choices[0].message.content
+                                print(f'Is {pmid}.pdf relevant to the question3: {question3}')
+                                print(f'Answer: {answer}')
+
+                            # </snip\>
 
 
 
