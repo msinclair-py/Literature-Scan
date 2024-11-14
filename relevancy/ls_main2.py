@@ -1,4 +1,3 @@
-
 from litscan import get_string_interaction_partners
 from litscan import get_pmcids
 from litscan import get_pmcids_for_term_and_partner
@@ -29,14 +28,43 @@ args     = parser.parse_args()
 retmax   = args.retmax
 template = args.template
 terms    = args.terms
-no_delete   = args.no_delete
+no_delete   = args.no_delete # defaults to False if not set
 get_partners = args.get_partners
 
 # For testing
-# get_partners = True
+get_partners = True
+
+# Add this helper function after the argument parsing and before main()
+def process_relevancy_check(pmid, question, delete_if_no=False):
+    """
+    Process a relevancy check for a PDF and return the score (-1 for no, 1 for yes).
+    
+    Args:
+        pmid: The PMID of the paper to check
+        question: The question to ask about the paper
+        delete_if_no: Whether to delete the PDF if the answer is no
+    
+    Returns:
+        int: 1 if relevant, -1 if not relevant, 0 if error
+    """
+    chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
+    if chat_response is None:
+        print(f"chat response {chat_response} does not contain choices")
+        return 0
+    
+    answer = chat_response.choices[0].message.content
+    print(f'Is {pmid}.pdf relevant to the question: {question}')
+    print(f'Answer: {answer}')
+    
+    is_relevant = not answer.lower().startswith('no')
+    if not is_relevant and delete_if_no:
+        print(f'removing {pmid}.pdf')
+        os.remove(f'{pmid}.pdf')
+    
+    return 1 if is_relevant else -1
+
 
 def main():
-
 
     for term in terms:
         pmids = [] 
@@ -103,86 +131,32 @@ def main():
                 print(f'file {pmid}.pdf does not exist')
                 continue  # Skip to the next pmid if the PDF does not exist
             
-
-
-
-            
             if get_partners == False:
                 question = template.format(term)
-                chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
-                if chat_response is None:
-                    print (f"chat response {chat_response} does not contain choices")
-                else:
-                    answer = chat_response.choices[0].message.content
-                    print(f'Is the paper relevant to the question: {question}')
-                    print(f'Answer: {answer}')
-                    if answer.lower().startswith('no') and no_delete == False:
-                        os.remove(f'{pmid}.pdf')
-            
+                process_relevancy_check(pmid, question, delete_if_no=not no_delete)
+
             else:
                 # Find which partner's PMIDs contain this pmid
                 matching_partner = None
                 for p, pmid_list in partner_dict.items():
-                    # im in an outter loop on pmid in pmids,
-                    # which itself is in an outter loop on term in terms
                     if pmid in pmid_list:
                         matching_partner = p
                         score = 0
 
-                        #sleep(10)
                         question1 = template.format(term)
+                        score += process_relevancy_check(pmid, question1)
 
-                        # <snip>
-                        chat_response = is_pdf_relevant(f"{pmid}.pdf", question1)
-                        if chat_response is None:
-                            print (f"chat response {chat_response} does not contain choices")
-                        else:
-                            answer = chat_response.choices[0].message.content
-                            print(f'Is {pmid}.pdf relevant to the question1: {question1}')
-                            print(f'Answer: {answer}')
-                        # </snip>
-                            if answer.lower().startswith('no'):
-                                score = score - 1
-                            else:
-                                score = score + 1
-                            
-
-                        #sleep (10)                        
                         question2 = template.format(matching_partner)
-                        # <snip>
-                        chat_response = is_pdf_relevant(f"{pmid}.pdf", question2)
-                        if chat_response is None:
-                            print (f"chat response {chat_response} does not contain choices")
-                        else:
-                            answer = chat_response.choices[0].message.content
-                            print(f'Is {pmid}.pdf relevant to the question2: {question2}')
-                            print(f'Answer: {answer}')
-                        #<\snip>
-                            if answer.lower().startswith('no'):
-                                score = score - 1
-                            else:
-                                score = score + 1
+                        score += process_relevancy_check(pmid, question2)
 
                         print(f'score {score}')
-                        if (score == -2) and (no_delete == False):
+                        if (score == -2) and (not no_delete):
                             print(f'removing {pmid}.pdf')
                             os.remove(f'{pmid}.pdf')
 
                         if score == 2:
-                            #sleep(10)
-                            question3 = f"What, if any, physical interactions occure between {term} and {matching_partner}"
-
-                            # <snip>
-                            chat_response = is_pdf_relevant(f"{pmid}.pdf", question3)
-                            if chat_response is None:
-                                print (f"chat response {chat_response} does not contain choices")
-                            else:
-                                answer = chat_response.choices[0].message.content
-                                print(f'Is {pmid}.pdf relevant to the question3: {question3}')
-                                print(f'Answer: {answer}')
-
-                            # </snip\>
-
+                            question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
+                            process_relevancy_check(pmid, question3)
 
 
 if __name__ == "__main__":
