@@ -16,6 +16,11 @@ BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 # Replace with your own NCBI API key (optional, but speeds up requests)
 # API_KEY = "your_api_key"
 
+# OpenAI API configuration
+OPENAI_API_KEY = "cmsc-35360"
+OPENAI_BASE_URL = "http://localhost:9999/v1" #"http://rbdgx2.cels.anl.gov:9999/v1"  
+OPENAI_MODEL = "llama31-405b-fp8"            #"meta-llama/Meta-Llama-3.1-70B-Instruct"
+
 def get_pmcids(term, retmax=20):
     sleep(1)
     url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
@@ -168,12 +173,12 @@ def is_pdf_relevant(pdf_filename, question):
 
 
     client = OpenAI(
-        api_key="cmsc-35360",
-        base_url="http://rbdgx2.cels.anl.gov:9999/v1"
+        api_key=OPENAI_API_KEY,
+        base_url=OPENAI_BASE_URL
     )
 
     chat_response = client.chat.completions.create(
-        model="meta-llama/Meta-Llama-3.1-70B-Instruct",
+        model=OPENAI_MODEL,
         messages=[
             {"role": "user", "content": f"Given the following content from a scientific paper, \
             is it relevant to answering the question: '{question}'? \
@@ -362,3 +367,4 @@ if __name__ == "__main__":
 
 
 
+    print(is_pdf_relevant("10069449.pdf", "What is the role of RTCB in DNA repair?"))
