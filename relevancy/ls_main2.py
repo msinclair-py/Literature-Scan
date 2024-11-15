@@ -162,7 +162,8 @@ def main():
 
                         if score != 3 and not no_delete:
                             print(f'removing {pmid}.pdf')
-                            os.remove(f'{pmid}.pdf')
+                            if os.path.exists(f'{pmid}.pdf'):
+                                os.remove(f'{pmid}.pdf')
 
 if __name__ == "__main__":
     main()
