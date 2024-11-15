@@ -6,7 +6,7 @@ from litscan import is_pdf_relevant
 
 import os
 from time import sleep
-
+from typing import List
 
 
 import argparse
@@ -22,6 +22,14 @@ parser.add_argument("--terms", nargs="+", help="List of items",
 parser.add_argument("--retmax", type=int, default=20, help="The maximum number of papers to download.")
 parser.add_argument("--no_delete", action="store_true", help="If set, do not delete pdf if not relevant")
 parser.add_argument("--get_partners", action="store_true", default=False, help="Use partner data")
+
+
+class Config:
+    """Configuration settings for the literature scanning application."""
+
+    # Partner interaction settings
+    PARTNER_LIMIT = 50
+    PARTNER_SCORE_THRESHOLD = 0.925
 
 # Parse arguments
 args     = parser.parse_args()
@@ -64,45 +72,39 @@ def process_relevancy_check(pmid, question, delete_if_no=False):
     return 1 if is_relevant else -1
 
 
+def get_relevant_partners(term: str) -> List[str]:
+    """Get relevant interaction partners for a given term above a score threshold."""
+    partners = []
+    partner_data = get_string_interaction_partners(term, limit=Config.PARTNER_LIMIT)
+    
+    for i, item in enumerate(partner_data):
+        partner = item["preferredName_B"]
+        print(f'{i}\t{item["preferredName_A"]}\t{item["preferredName_B"]}\t{item["score"]}')
+        
+        if item["score"] > Config.PARTNER_SCORE_THRESHOLD:
+            partners.append(partner)
+    
+    return partners
+
 def main():
 
     for term in terms:
         pmids = [] 
         partner_dict = {}
 
-        # Get pmids for term AND each partner
+        # Part 1: Get pmids for term AND each partner
         if get_partners == True:
-            partners=[]
-            partner_data = get_string_interaction_partners(term, limit=50)
-            for i, item in enumerate(partner_data):
-                partner = item["preferredName_B"]
-                print(f'{i}\t{item["preferredName_A"]}\t{item["preferredName_B"]}\t{item["score"]}')
+            partners = get_relevant_partners(term)
 
-                # THIS IS BEING SET ARBITRARILY
-                if item["score"] > 0.925:
-                    partners.append(partner)
-
-            # Get PMIDs for term AND partners
             if partners:
                 for partner in partners:
-
-                    # get the PMIDs
                     term_and_partner_pmids = get_pmcids_for_term_and_partner(term, partner, retmax=retmax)
-
-                    # add the PMIDs to the list
                     if term_and_partner_pmids:
                         pmids.extend(term_and_partner_pmids)
-                    
-                    # associate the PMIDs with the partner.
-                    # the term (target) is known, we in a foreach term outter loop.
-                    # the partner is known, and with this term and partner we get pmids.
-                    # so,the partner_dict has the partner as the key with associated pmids.
-                    # this is for one term many partners.
-                    partner_dict[partner] = term_and_partner_pmids
-                    print(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
-
-                else:
-                    print(f"No PMIDs found for {term} and {partner}")
+                        partner_dict[partner] = term_and_partner_pmids
+                        print(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
+                    else:
+                        print(f"No PMIDs found for {term} and {partner}")
             else:
                 print(f"No partners found for {term}")
 
@@ -111,7 +113,8 @@ def main():
             pmids = get_pmcids(term, retmax=retmax)
             print(f"Found {len(pmids)} PMIDs for gene {term}") #: {pmids}")
 
-        # Download the PDFs
+        
+        # Part 2: Download the PDFs
         if len(pmids) == 0:
             print(f"No PMIDs found for gene '{term}'")
             continue
@@ -119,21 +122,20 @@ def main():
             for pmid in pmids:
                 get_pdf(pmid)
 
-        # Determine the relevancy 
+
+        # Part 3: Determine the relevancy of the PDFs
         # question = f"What is the role of the gene {term}?"
         # question = f"What is the role of the gene {partner}?"
         for pmid in pmids:
             print("\n")
 
-            # get the PDF
-            get_pdf(pmid)
             if os.path.exists(f'{pmid}.pdf') == False:
                 print(f'file {pmid}.pdf does not exist')
                 continue  # Skip to the next pmid if the PDF does not exist
             
             if get_partners == False:
                 question = template.format(term)
-                process_relevancy_check(pmid, question, delete_if_no=not no_delete)
+                process_relevancy_check(pmid, question, delete_if_no=not no_delete) # delete if no_delete is False
 
             else:
                 # Find which partner's PMIDs contain this pmid
@@ -156,8 +158,11 @@ def main():
 
                         if score == 2:
                             question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
-                            process_relevancy_check(pmid, question3)
+                            score += process_relevancy_check(pmid, question3)
 
+                        if score != 3 and not no_delete:
+                            print(f'removing {pmid}.pdf')
+                            os.remove(f'{pmid}.pdf')
 
 if __name__ == "__main__":
     main()
