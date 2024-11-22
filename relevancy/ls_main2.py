@@ -8,20 +8,26 @@ import os
 from time import sleep
 from typing import List
 
+import logging
 
 import argparse
+
+# Get the default log filename by changing .py to .log
+default_logfile = os.path.splitext(__file__)[0] + '.log'
 
 # Initialize the parser
 parser = argparse.ArgumentParser(description="A simple download and relevancy testing program.")
 
-# Add arguments TODO: This needs to be tested.
 parser.add_argument("--template", type=str, help="The question you want to ask.",
         default="What is the role of the gene {}?")
 parser.add_argument("--terms", nargs="+", help="List of items", 
-        default=["WHSC1", "RTCB", "WRN", "P2X7", "NLRP3", "CSF1R", "ALKBH1", "NMNAT2", "NSUN2", "RTCB"])
+        default=["WHSC1", "RTCB"]) # , "WRN", "P2X7", "NLRP3", "CSF1R", "ALKBH1", "NMNAT2", "NSUN2", "RTCB"])
 parser.add_argument("--retmax", type=int, default=20, help="The maximum number of papers to download.")
 parser.add_argument("--no_delete", action="store_true", help="If set, do not delete pdf if not relevant")
 parser.add_argument("--get_partners", action="store_true", default=False, help="Use partner data")
+parser.add_argument("--logfile", type=str, 
+                   default=default_logfile,
+                   help="Path to the log file (default: %(default)s)")
 
 
 class Config:
@@ -37,10 +43,27 @@ retmax   = args.retmax
 template = args.template
 terms    = args.terms
 no_delete   = args.no_delete # defaults to False if not set
+
 get_partners = args.get_partners
+logfile = args.logfile
 
 # For testing
 get_partners = True
+
+# Configure logging to both file and console
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(logfile),
+        # logging.StreamHandler()  # This will continue logging to console
+    ]
+)
+logger = logging.getLogger(__name__)
+logger.info(f'Logging to file: {logfile}')
+logger.info(f'Arguments: {args}')
+
+
 
 # Add this helper function after the argument parsing and before main()
 def process_relevancy_check(pmid, question, delete_if_no=False):
@@ -57,16 +80,16 @@ def process_relevancy_check(pmid, question, delete_if_no=False):
     """
     chat_response = is_pdf_relevant(f"{pmid}.pdf", question)
     if chat_response is None:
-        print(f"chat response {chat_response} does not contain choices")
+        logger.info(f"chat response {chat_response} does not contain choices")
         return 0
     
     answer = chat_response.choices[0].message.content
-    print(f'Is {pmid}.pdf relevant to the question: {question}')
-    print(f'Answer: {answer}')
+    logger.info(f'Is {pmid}.pdf relevant to the question: {question}')
+    logger.info(f'Answer: {answer}')
     
     is_relevant = not answer.lower().startswith('no')
     if not is_relevant and delete_if_no:
-        print(f'removing {pmid}.pdf')
+        logger.info(f'removing {pmid}.pdf')
         os.remove(f'{pmid}.pdf')
     
     return 1 if is_relevant else -1
@@ -79,18 +102,125 @@ def get_relevant_partners(term: str) -> List[str]:
     
     for i, item in enumerate(partner_data):
         partner = item["preferredName_B"]
-        print(f'{i}\t{item["preferredName_A"]}\t{item["preferredName_B"]}\t{item["score"]}')
+        logger.info(f'{i}\t{item["preferredName_A"]}\t{item["preferredName_B"]}\t{item["score"]}')
         
         if item["score"] > Config.PARTNER_SCORE_THRESHOLD:
             partners.append(partner)
     
     return partners
 
-def main():
+def process_partner_relevancy(pmid: str, term: str, matching_partner: str, template: str, no_delete: bool) -> int:
+    """
+    Process relevancy checks for a paper containing partner interactions.
+    
+    Args:
+        pmid: The PMID of the paper to check
+        term: The main gene term
+        matching_partner: The partner gene to check
+        template: Question template to use
+        no_delete: If True, keep PDFs even if not relevant
+    
+    Returns:
+        int: Score indicating relevancy (3=fully relevant with interactions, 
+             2=relevant genes, -2=irrelevant genes)
+    """
+    score = 0
 
+    # Check relevancy for main term
+    question1 = template.format(term)
+    score += process_relevancy_check(pmid, question1)
+
+    # Check relevancy for partner
+    question2 = template.format(matching_partner)
+    score += process_relevancy_check(pmid, question2)
+
+    logger.info(f'score {score}')
+    if (score == -2) and (not no_delete):
+        logger.info(f'removing {pmid}.pdf')
+        os.remove(f'{pmid}.pdf')
+
+    # Check for interactions if both genes are relevant
+    if score == 2:
+        question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
+        score += process_relevancy_check(pmid, question3)
+
+    if score != 3 and not no_delete:
+        if os.path.exists(f'{pmid}.pdf'):
+            logger.info(f'removing {pmid}.pdf')
+            os.remove(f'{pmid}.pdf')
+
+    return score
+
+# In process_pdf_relevancy, replace the matching code block with:
+    if matching_partner:
+        return process_partner_relevancy(pmid, term, matching_partner, template, no_delete)
+
+def process_pdf_relevancy(pmid: str, term: str, get_partners: bool, template: str, 
+                         no_delete: bool, partner_dict: dict = None) -> int:
+    """
+    Process a PDF file to determine its relevancy based on specified criteria.
+    
+    Args:
+        pmid: The PMID of the paper to check
+        term: The gene term being searched
+        get_partners: Whether to check for partner interactions
+        template: The question template to use
+        no_delete: If True, keep PDFs even if not relevant
+        partner_dict: Dictionary mapping partners to their PMIDs (required if get_partners=True)
+    
+    Returns:
+        int: The relevancy score (3 for fully relevant with interactions, 2 for relevant genes,
+             -2 for irrelevant genes, or None if no partner processing was done)
+    """
+    if not os.path.exists(f'{pmid}.pdf'):
+        logger.info(f'file {pmid}.pdf does not exist')
+        return None # should not happen, but just in case, should it return 0?
+
+    if not get_partners:
+        question = template.format(term)
+        score = process_relevancy_check(pmid, question, delete_if_no=not no_delete)
+        return score
+
+    # Partner processing
+    matching_partner = None
+    results = []
+    for p, pmid_list in partner_dict.items():
+        if pmid in pmid_list:
+            matching_partner = p
+            score = 0
+
+            # Check relevancy for main term
+            question1 = template.format(term)
+            score += process_relevancy_check(pmid, question1)
+
+            # Check relevancy for partner
+            question2 = template.format(matching_partner)
+            score += process_relevancy_check(pmid, question2)
+
+            logger.info(f'score {score}')
+            if (score == -2) and (not no_delete):
+                logger.info(f'removing {pmid}.pdf')
+                os.remove(f'{pmid}.pdf')
+
+            # Check for interactions if both genes are relevant
+            if score == 2:
+                question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
+                score += process_relevancy_check(pmid, question3)
+
+            if score != 3 and not no_delete:
+                if os.path.exists(f'{pmid}.pdf'):
+                    logger.info(f'removing {pmid}.pdf')
+                    os.remove(f'{pmid}.pdf')
+            # Store results for this partner
+            results.append((term, matching_partner, pmid, score))
+            
+    return results
+
+def main():
+    results = []
     for term in terms:
         pmids = [] 
-        partner_dict = {}
+        partner_dict = {}  # key is partner, value is list of unvalidated PMIDs.
 
         # Part 1: Get pmids for term AND each partner
         if get_partners == True:
@@ -102,21 +232,22 @@ def main():
                     if term_and_partner_pmids:
                         pmids.extend(term_and_partner_pmids)
                         partner_dict[partner] = term_and_partner_pmids
-                        print(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
+                        logger.info(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
+                        logger.info(f'{term}\t{partner}\t{", ".join(term_and_partner_pmids)}')
                     else:
-                        print(f"No PMIDs found for {term} and {partner}")
+                        logger.info(f"No PMIDs found for {term} and {partner}")
             else:
-                print(f"No partners found for {term}")
+                logger.info(f"No partners found for {term}")
 
         # Get PMIDs for the term
         else:
             pmids = get_pmcids(term, retmax=retmax)
-            print(f"Found {len(pmids)} PMIDs for gene {term}") #: {pmids}")
+            logger.info(f"Found {len(pmids)} PMIDs for gene {term}")
 
         
         # Part 2: Download the PDFs
         if len(pmids) == 0:
-            print(f"No PMIDs found for gene '{term}'")
+            logger.info(f"No PMIDs found for gene '{term}'")
             continue
         else:
             for pmid in pmids:
@@ -126,44 +257,19 @@ def main():
         # Part 3: Determine the relevancy of the PDFs
         # question = f"What is the role of the gene {term}?"
         # question = f"What is the role of the gene {partner}?"
+        # question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
+        
         for pmid in pmids:
-            print("\n")
-
-            if os.path.exists(f'{pmid}.pdf') == False:
-                print(f'file {pmid}.pdf does not exist')
-                continue  # Skip to the next pmid if the PDF does not exist
+            logger.info("\n")
+            results.append(process_pdf_relevancy(pmid, term, get_partners, template, no_delete, partner_dict))
             
-            if get_partners == False:
-                question = template.format(term)
-                process_relevancy_check(pmid, question, delete_if_no=not no_delete) # delete if no_delete is False
-
-            else:
-                # Find which partner's PMIDs contain this pmid
-                matching_partner = None
-                for p, pmid_list in partner_dict.items():
-                    if pmid in pmid_list:
-                        matching_partner = p
-                        score = 0
-
-                        question1 = template.format(term)
-                        score += process_relevancy_check(pmid, question1)
-
-                        question2 = template.format(matching_partner)
-                        score += process_relevancy_check(pmid, question2)
-
-                        print(f'score {score}')
-                        if (score == -2) and (not no_delete):
-                            print(f'removing {pmid}.pdf')
-                            os.remove(f'{pmid}.pdf')
-
-                        if score == 2:
-                            question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
-                            score += process_relevancy_check(pmid, question3)
-
-                        if score != 3 and not no_delete:
-                            print(f'removing {pmid}.pdf')
-                            if os.path.exists(f'{pmid}.pdf'):
-                                os.remove(f'{pmid}.pdf')
+            
+        for partner, pmid_list in partner_dict.items():
+            if pmid in pmid_list:
+                print(f'{term}\t{partner}\t{pmid_list}')
+            
+    for result in results:
+        print(result)
 
 if __name__ == "__main__":
     main()
