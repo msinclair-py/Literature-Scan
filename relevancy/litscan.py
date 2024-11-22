@@ -22,6 +22,26 @@ OPENAI_BASE_URL = "http://localhost:9999/v1" #"http://rbdgx2.cels.anl.gov:9999/v
 OPENAI_MODEL = "llama31-405b-fp8"            #"meta-llama/Meta-Llama-3.1-70B-Instruct"
 
 def get_pmcids(term, retmax=20):
+    """
+    Retrieves PubMed Central IDs (PMCIDs) for articles matching a search term.
+
+    This function searches PubMed Central using the NCBI E-utilities API to find articles
+    that contain the given term in either their title or abstract. It only returns articles
+    that have free full text available.
+
+    Args:
+        term (str): The search term to look for in article titles and abstracts
+        retmax (int, optional): Maximum number of results to return. Defaults to 20.
+
+    Returns:
+        list: A list of PMCIDs as strings. Returns an empty list if no results are found
+              or if the API request fails.
+
+    Note:
+        - Includes a 1 second delay to comply with NCBI E-utilities usage guidelines
+        - Only returns articles with free full text access
+        - Searches both title and abstract fields
+    """
     sleep(1)
     url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
     
@@ -29,7 +49,6 @@ def get_pmcids(term, retmax=20):
     # print(f'get_pmcids url: {url}')
     response = requests.get(url, ) #headers=headers, data=data)
 
-    # Check if the request was successful (status code 200)
     if response.status_code == 200:
         # print(f'The response is {response}')
         json_response = response.json()
@@ -46,6 +65,29 @@ def get_pmcids(term, retmax=20):
     return arr
 
 def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=20):
+    """
+    Retrieves PubMed Central IDs (PMCIDs) for articles containing both search terms.
+
+    This function searches PubMed Central using the NCBI E-utilities API to find articles
+    that contain both the given terms. The search can be restricted to title only,
+    abstract only, or both title and abstract (default).
+
+    Args:
+        term (str): The first search term to look for
+        partner (str): The second search term to look for
+        title_only (bool, optional): If True, search only in article titles. Defaults to False.
+        abstract_only (bool, optional): If True, search only in article abstracts. Defaults to False.
+        retmax (int, optional): Maximum number of results to return. Defaults to 20.
+
+    Returns:
+        list: A list of PMCIDs as strings that mat. Returns an empty list if no results are found
+              or if the API request fails.
+
+    Note:
+        - Includes a 1 second delay to comply with NCBI E-utilities usage guidelines
+        - Only returns articles with free full text access
+        - If neither title_only nor abstract_only is True, searches both fields
+    """
     sleep(1)
     if title_only:
         term_query = f'({term}[Title] AND {partner}[Title])'
@@ -166,6 +208,7 @@ def is_pdf_relevant(pdf_filename, question):
         return None
 
     with open(pdf_filename, 'rb') as file:
+        
         pdf_reader = PyPDF2.PdfReader(file)
         content = ""
         for page in pdf_reader.pages:
