@@ -94,7 +94,6 @@ def process_relevancy_check(pmid, question, delete_if_no=False):
     
     return 1 if is_relevant else -1
 
-
 def get_relevant_partners(term: str) -> List[str]:
     """Get relevant interaction partners for a given term above a score threshold."""
     partners = []
@@ -229,7 +228,7 @@ def main():
             if partners:
                 for partner in partners:
                     term_and_partner_pmids = get_pmcids_for_term_and_partner(term, partner, retmax=retmax)
-                    if term_and_partner_pmids:
+                    if len(term_and_partner_pmids) > 0:
                         pmids.extend(term_and_partner_pmids)
                         partner_dict[partner] = term_and_partner_pmids
                         logger.info(f"Found {len(term_and_partner_pmids)} PMIDs for gene {term} and {partner}")
@@ -259,6 +258,7 @@ def main():
         # question = f"What is the role of the gene {partner}?"
         # question3 = f"What, if any, physical interactions occur between {term} and {matching_partner}"
         
+        # still in for term in terms loop
         for pmid in pmids:
             logger.info("\n")
             results.append(process_pdf_relevancy(pmid, term, get_partners, template, no_delete, partner_dict))
