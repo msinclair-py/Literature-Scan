@@ -184,7 +184,7 @@ def get_pdf(pmcid):
     # Execute the wget command
     try:
         subprocess.run(wget_command, check=True, ) #stderr=subprocess.DEVNULL)
-        print(f"{pmcid}.pdf downloaded successfully!")
+        # print(f"{pmcid}.pdf downloaded successfully!")
     except subprocess.CalledProcessError as e:
         print(" ".join(wget_command), "failed")
         print(f"Failed to download {pmcid} PDF. Error: {e}")
@@ -200,7 +200,7 @@ def is_pdf_relevant(pdf_filename, question):
 
     try:
         if os.stat(pdf_filename).st_size == 0:
-            print(f"The file {pdf_filename} is empty. It is being deleted")
+            # print(f"The file {pdf_filename} is empty. It is being deleted")
             os.remove(pdf_filename)
             return None
     except FileNotFoundError:
@@ -266,10 +266,10 @@ def get_string_id(protein_name):
 
         response.raise_for_status()
         protein_data = response.json()
-        print(f'length of protein_data: {len(protein_data)}')
+        # print(f'length of protein_data: {len(protein_data)}')
         
         if not protein_data:
-            print(f"No STRING ID found for protein: {protein_name}")
+            # print(f"No STRING ID found for protein: {protein_name}")
             return []
             
         string_id = protein_data[0]['stringId']
@@ -301,7 +301,7 @@ def get_string_publications_by_id(string_id):
         pub_response = requests.get(publications_url)
         pub_response.raise_for_status()
         publications = pub_response.json()
-        print(f'length of publications: {len(publications)}')
+        # print(f'length of publications: {len(publications)}')
   
     except requests.exceptions.RequestException as e:
         print(f"Error accessing STRING database: {e}")
@@ -327,10 +327,10 @@ def get_string_functional_annotation(protein_name):
         response = requests.get(functional_url)
         response.raise_for_status()
         functional_data = response.json()
-        print(f'length of functional_data: {len(functional_data)}')
+        # print(f'length of functional_data: {len(functional_data)}')
 
         if not functional_data:
-            print(f"No functional annotations found for protein: {protein_name}")
+            # print(f"No functional annotations found for protein: {protein_name}")
             return []
             
         return functional_data
@@ -358,10 +358,10 @@ def get_string_interaction_partners(protein_name, limit=10):
         response = requests.get(interaction_url)
         response.raise_for_status()
         interaction_partners = response.json()
-        print(f'length of interaction_partners: {len(interaction_partners)}')
+        # print(f'length of interaction_partners: {len(interaction_partners)}')
         
         if not interaction_partners:
-            print(f"No interaction partners found for protein: {protein_name}")
+            # print(f"No interaction partners found for protein: {protein_name}")
             return []
             
         return interaction_partners
