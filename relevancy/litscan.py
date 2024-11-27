@@ -16,12 +16,19 @@ BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 # Replace with your own NCBI API key (optional, but speeds up requests)
 # API_KEY = "your_api_key"
 
-# OpenAI API configuration
-OPENAI_API_KEY = "cmsc-35360"
-OPENAI_BASE_URL = "http://localhost:9999/v1" #"http://rbdgx2.cels.anl.gov:9999/v1"  
-OPENAI_MODEL = "llama31-405b-fp8"            #"meta-llama/Meta-Llama-3.1-70B-Instruct"
+class Config:
+    """Configuration class to manage API endpoints and settings"""
+    
+    def __init__(self):
+        # OpenAI Settings
+        self.openai_api_key = "cmsc-35360"
+        self.openai_base_url = "http://localhost:9999/v1"
+        self.openai_model = "llama31-405b-fp8"
 
-def get_pmcids(term, retmax=20):
+        # NCBI Settings
+        self.retmax = 20
+
+def get_pmcids(term, retmax=Config.retmax):
     """
     Retrieves PubMed Central IDs (PMCIDs) for articles matching a search term.
 
@@ -64,7 +71,7 @@ def get_pmcids(term, retmax=20):
 
     return arr
 
-def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=20):
+def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=Config.retmax):
     """
     Retrieves PubMed Central IDs (PMCIDs) for articles containing both search terms.
 
@@ -116,39 +123,27 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
         arr = []
     return arr
 
-def find_similar_papers(pmid, api_key=None):
-    # Function to find similar papers using elink
-    sleep(1)
-    
-    params = {
-        'dbfrom': 'pubmed',
-        'db': 'pubmed',
-        'id': pmid,
-        'linkname': 'pubmed_pubmed',
-        'retmode': 'xml',
-        #'api_key': api_key
-    }
-    similar_pmids = []
-    try:
-    # Check if the response content is empty
-        response = requests.get(f"{BASE_URL}elink.fcgi", params=params)
-        if not response.content:
-            raise ValueError("Empty response content")
-
-        # Parse the XML content
-        # print(f'parsing response {response.content}')
-        tree = ET.fromstring(response.content)
-        # Extract related article PMIDs
-        similar_pmids = [id_tag.text for id_tag in tree.findall(".//LinkSetDb/Link/Id")]
-
-    except requests.exceptions.RequestException as e:
-        print(f"Request error: {e}")
-    except ET.ParseError as e:
-        print(f"XML parsing error: {e}")
-
-    return similar_pmids
-
 def get_pdf(pmcid):
+    """
+    Downloads a PDF article from PubMed Central given its PMCID.
+
+    This function attempts to download a PDF article from PubMed Central using wget.
+    If the PDF already exists locally, it skips the download.
+
+    Args:
+        pmcid (str): The PubMed Central ID of the article to download
+
+    Returns:
+        None
+
+    Note:
+        - Includes a 1 second delay to comply with NCBI usage guidelines
+        - Uses wget to download the PDF file
+        - Saves the PDF with filename {pmcid}.pdf in the current directory
+        - Requires wget to be installed on the system
+        - Will attempt to find wget in common installation locations
+    """
+
     if os.path.exists(f'{pmcid}.pdf'):
         return
     
@@ -160,7 +155,6 @@ def get_pdf(pmcid):
     pdf_url = PMCLink + pmcid + '/pdf/'
     response = requests.get(pdf_url, ) #headers={'User-Agent': user_agent})
 
-    # Find wget path at runtime
     wget_path = None
     possible_paths = ['/usr/bin/wget', '/opt/homebrew/bin/wget', '/usr/local/bin/wget']
     
@@ -181,10 +175,11 @@ def get_pdf(pmcid):
            f'-O{pmcid}.pdf',
            pdf_url,
           ]
-    # Execute the wget command
+    
     try:
         subprocess.run(wget_command, check=True, ) #stderr=subprocess.DEVNULL)
-        print(f"{pmcid}.pdf downloaded successfully!")
+        # print(f"{pmcid}.pdf downloaded successfully!")
+
     except subprocess.CalledProcessError as e:
         print(" ".join(wget_command), "failed")
         print(f"Failed to download {pmcid} PDF. Error: {e}")
