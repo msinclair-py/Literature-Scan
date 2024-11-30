@@ -164,7 +164,7 @@ def main():
     
     # Extract and summarize PDF
     pdf_path = sys.argv[1]
-    if sys.argv[2]:
+    if len(sys.argv) > 2:
         term = sys.argv[2]
     else:
         term = None
