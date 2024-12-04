@@ -19,9 +19,9 @@ def read_interactions_file(file_path):
     return interactions
 
 # Example usage:
-file_path = sys.argv[1]
-interactions = read_interactions_file(file_path)
+if __name__ == "__main__":
+    file_path = sys.argv[1]
+    interactions = read_interactions_file(file_path)
 
-# Print to verify
-for interaction in interactions:
-    print(interaction)
+    for interaction in interactions:
+        print(interaction)
