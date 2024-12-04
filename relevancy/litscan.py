@@ -205,8 +205,12 @@ def is_pdf_relevant(pdf_filename, question):
         
         pdf_reader = PyPDF2.PdfReader(file)
         content = ""
-        for page in pdf_reader.pages:
-            content += page.extract_text()
+        try:
+            for page in pdf_reader.pages:
+                content += page.extract_text()
+        except Exception as e:
+            print(f"Error extracting text from {pdf_filename}: {e}")
+            return None
 
 
     client = OpenAI(
