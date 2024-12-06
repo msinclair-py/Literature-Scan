@@ -5,6 +5,26 @@ import PyPDF2
 import tiktoken
 from openai import OpenAI
 
+"""PDFSummarizer provides functionality to extract, summarize and analyze PDF documents using LLMs.
+
+The class handles:
+- PDF text extraction
+- Text chunking to fit within LLM context windows 
+- Document summarization
+- Interactive Q&A about the document content
+- Conversation history tracking
+
+Example usage:
+    config = LLMConfig()
+    summarizer = PDFSummarizer(config)
+    
+    # Extract and summarize PDF
+    summarizer.extract_text("paper.pdf")
+    summary = summarizer.summarize()
+    
+    # Ask questions
+    answer = summarizer.ask_question("What are the main findings?")
+"""
 
 class PDFSummarizer:
     def __init__(self, config: LLMConfig):
@@ -19,8 +39,8 @@ class PDFSummarizer:
         self.max_chunk_tokens = 4000  # Adjust this based on your model's limits
         self.overlap_tokens = 200     # Overlap between chunks to maintain context
 
-    def extract_text(self, pdf_path):
-        """Extract text content from PDF file"""
+    def extract_text(self, pdf_path: str) -> str:
+        """Extract text content from PDF file and assign to context."""
         text = ""
         with open(pdf_path, 'rb') as file:
             reader = PyPDF2.PdfReader(file)
@@ -49,7 +69,7 @@ class PDFSummarizer:
 
         return chunks
 
-    def summarize(self):
+    def summarize(self) -> str:
         """Generate summary of PDF content using chunks"""
         chunks = self._chunk_text(self.context)
         chunk_summaries = []
@@ -81,7 +101,7 @@ class PDFSummarizer:
 
         return final_summary
 
-    def ask_question(self, question):
+    def ask_question(self, question: str) -> str:
         """Ask follow-up question about the PDF content using chunks"""
         chunks = self._chunk_text(self.context)
         chunk_responses = []
@@ -116,7 +136,7 @@ class PDFSummarizer:
         """Count the number of tokens in a text string"""
         return len(self.tokenizer.encode(text))
 
-    def _get_completion(self, prompt):
+    def _get_completion(self, prompt: str) -> str:
         """Helper method to get LLM completion"""
         try:
             response = self.client.chat.completions.create(
@@ -129,7 +149,7 @@ class PDFSummarizer:
         except Exception as e:
             return f"Error getting LLM response: {str(e)}"
 
-    def save_conversation(self, output_path=None, term=None):
+    def save_conversation(self, output_path: str = None, term: str = None) -> str:
         """Save conversation history to a file"""
         if output_path is None:
             # Generate default filename using timestamp
