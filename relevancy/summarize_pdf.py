@@ -1,4 +1,5 @@
 import sys
+sys.path.append("..")
 
 from relevancy.LLMConfig import LLMConfig
 from relevancy.PDFSummarizer import PDFSummarizer
