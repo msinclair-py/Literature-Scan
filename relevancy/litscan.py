@@ -75,6 +75,45 @@ def get_pmcids(term, retmax=LitScanConfig.retmax):
 
     return arr
 
+def get_pmcids_by_author(author, retmax=LitScanConfig.retmax):
+    """
+    Retrieves PubMed Central IDs (PMCIDs) for articles by a specific author.
+
+    This function searches PubMed Central using the NCBI E-utilities API to find articles
+    published by the specified author.
+
+    Args:
+        author (str): The author name to search for (e.g., "Smith J" or "Smith JA")
+        retmax (int, optional): Maximum number of results to return. Defaults to 20.
+
+    Returns:
+        list: A list of PMCIDs as strings. Returns an empty list if no results are found
+              or if the API request fails.
+
+    Note:
+        - Includes a 1 second delay to comply with NCBI E-utilities usage guidelines
+        - Author name format should match PubMed's format (typically "Last FM")
+    """
+    sleep(1)
+    url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
+    
+    #url = url + f'db=pmc&term={author}[Author]+AND+free+fulltext[filter]&retmode=json&retmax={retmax}'
+    url = url + f'db=pmc&term={author}[Author]&retmode=json&retmax={retmax}'
+    print(f'url: {url}')
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        json_response = response.json()
+        if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
+            arr = json_response['esearchresult']['idlist']
+        else:
+            arr = []
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        arr = []
+
+    return arr
+
 def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=LitScanConfig.retmax):
     """
     Retrieves PubMed Central IDs (PMCIDs) for articles containing both search terms.
@@ -195,28 +234,35 @@ def get_pdf(pmcid, outdir="."):
 
 
 # tools
-def is_pdf_relevant(pdf_filename, question):
-    try:
-        if os.stat(pdf_filename).st_size == 0:
-            # print(f"The file {pdf_filename} is empty. It is being deleted")
-            os.remove(pdf_filename)
-            return None
-    except FileNotFoundError:
-        print(f"The file {pdf_filename} does not exist")
-        return None
+def ask_llm_about_relevance(content, question):
+    """
+    Asks the LLM whether a given content is relevant to answering a specific question.
 
-    with open(pdf_filename, 'rb') as file:
-        
-        pdf_reader = PyPDF2.PdfReader(file)
-        content = ""
-        try:
-            for page in pdf_reader.pages:
-                content += page.extract_text()
-        except Exception as e:
-            print(f"Error extracting text from {pdf_filename}: {e}")
-            return None
+    This function uses the configured LLM (Large Language Model) to evaluate whether a piece of
+    text content is relevant for answering a specific question. It prompts the LLM to provide
+    a Yes/No response with a brief explanation.
 
+    Args:
+        content (str): The text content to analyze (typically from a scientific paper)
+        question (str): The question to evaluate relevance against
 
+    Returns:
+        ChatCompletion: The response from the LLM containing relevance assessment.
+                       The response will include a Yes/No answer followed by a brief explanation.
+
+    Example:
+        >>> content = "This paper discusses the role of RTCB in RNA ligation..."
+        >>> question = "What is the role of RTCB in DNA repair?"
+        >>> response = ask_llm_about_relevance(content, question)
+        >>> print(response.choices[0].message.content)
+        "No. This paper focuses on RTCB's role in RNA ligation rather than DNA repair."
+
+    Note:
+        - The function truncates the content to the first 2000 characters to stay within
+          typical LLM token limits
+        - Uses temperature=0.0 for more consistent, deterministic responses
+        - Configured to use the LLM settings from LitScanConfig
+    """
     client = OpenAI(
         api_key=LitScanConfig.openai_api_key,
         base_url=LitScanConfig.openai_base_url
@@ -227,12 +273,33 @@ def is_pdf_relevant(pdf_filename, question):
         messages=[
             {"role": "user", "content": f"Given the following content from a scientific paper, \
             is it relevant to answering the question: '{question}'? \
-            Please respond with 'Yes' or 'No' followed by a brief explanation.\n\nContent: {content[:2000]}..."},
+            Please respond with 'Yes' or 'No' followed by a brief explanation.\n\nContent: {content}..."},
         ],
         temperature=0.0,
         max_tokens=2056,
     )
     return chat_response
+
+def is_pdf_relevant(pdf_filename, question):
+    try:
+        if os.stat(pdf_filename).st_size == 0:
+            os.remove(pdf_filename)
+            return None
+    except FileNotFoundError:
+        print(f"The file {pdf_filename} does not exist")
+        return None
+
+    with open(pdf_filename, 'rb') as file:
+        pdf_reader = PyPDF2.PdfReader(file)
+        content = ""
+        try:
+            for page in pdf_reader.pages:
+                content += page.extract_text()
+        except Exception as e:
+            print(f"Error extracting text from {pdf_filename}: {e}")
+            return None
+
+    return ask_llm_about_relevance(content, question)
 
 def get_string_id(protein_name):
     """
@@ -384,44 +451,7 @@ def print_detailed(json_data):
             else:
                 print(f"    Content: {value}")
 
-def get_pmcids_by_author(author, retmax=LitScanConfig.retmax):
-    """
-    Retrieves PubMed Central IDs (PMCIDs) for articles by a specific author.
 
-    This function searches PubMed Central using the NCBI E-utilities API to find articles
-    published by the specified author.
-
-    Args:
-        author (str): The author name to search for (e.g., "Smith J" or "Smith JA")
-        retmax (int, optional): Maximum number of results to return. Defaults to 20.
-
-    Returns:
-        list: A list of PMCIDs as strings. Returns an empty list if no results are found
-              or if the API request fails.
-
-    Note:
-        - Includes a 1 second delay to comply with NCBI E-utilities usage guidelines
-        - Author name format should match PubMed's format (typically "Last FM")
-    """
-    sleep(1)
-    url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
-    
-    #url = url + f'db=pmc&term={author}[Author]+AND+free+fulltext[filter]&retmode=json&retmax={retmax}'
-    url = url + f'db=pmc&term={author}[Author]&retmode=json&retmax={retmax}'
-    print(f'url: {url}')
-    response = requests.get(url)
-
-    if response.status_code == 200:
-        json_response = response.json()
-        if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
-            arr = json_response['esearchresult']['idlist']
-        else:
-            arr = []
-    else:
-        print(f"Error: {response.status_code} - {response.text}")
-        arr = []
-
-    return arr
 
 if __name__ == "__main__":
 
@@ -451,4 +481,4 @@ if __name__ == "__main__":
 
 
 
-    print(is_pdf_relevant("10069449.pdf", "What is the role of RTCB in DNA repair?"))
+    print(is_pdf_relevant("10124711.pdf", "What is the role of RTCB in DNA repair?"))
