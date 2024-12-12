@@ -16,9 +16,13 @@ BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 # Replace with your own NCBI API key (optional, but speeds up requests)
 # API_KEY = "your_api_key"
 
-class Config:
+class LitScanConfig:
     """Configuration class to manage API endpoints and settings"""
-    
+    retmax = 20
+    openai_api_key = "cmsc-35360"
+    openai_base_url = "http://localhost:9999/v1"
+    openai_model = "llama31-405b-fp8"
+
     def __init__(self):
         # OpenAI Settings
         self.openai_api_key = "cmsc-35360"
@@ -28,7 +32,7 @@ class Config:
         # NCBI Settings
         self.retmax = 20
 
-def get_pmcids(term, retmax=Config.retmax):
+def get_pmcids(term, retmax=LitScanConfig.retmax):
     """
     Retrieves PubMed Central IDs (PMCIDs) for articles matching a search term.
 
@@ -71,7 +75,7 @@ def get_pmcids(term, retmax=Config.retmax):
 
     return arr
 
-def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=Config.retmax):
+def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_only=False, retmax=LitScanConfig.retmax):
     """
     Retrieves PubMed Central IDs (PMCIDs) for articles containing both search terms.
 
@@ -123,7 +127,7 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
         arr = []
     return arr
 
-def get_pdf(pmcid):
+def get_pdf(pmcid, outdir="."):
     """
     Downloads a PDF article from PubMed Central given its PMCID.
 
@@ -144,7 +148,8 @@ def get_pdf(pmcid):
         - Will attempt to find wget in common installation locations
     """
 
-    if os.path.exists(f'{pmcid}.pdf'):
+    if os.path.exists(f'{outdir}/{pmcid}.pdf'):
+        print(f'{outdir}/{pmcid}.pdf already exists')
         return
     
     sleep(1)
@@ -172,7 +177,7 @@ def get_pdf(pmcid):
            f'-l1',
            f'--no-parent',
            f'-A.pdf',
-           f'-O{pmcid}.pdf',
+           f'-O{outdir}/{pmcid}.pdf',
            pdf_url,
           ]
     
@@ -191,7 +196,6 @@ def get_pdf(pmcid):
 
 # tools
 def is_pdf_relevant(pdf_filename, question):
-
     try:
         if os.stat(pdf_filename).st_size == 0:
             # print(f"The file {pdf_filename} is empty. It is being deleted")
@@ -214,12 +218,12 @@ def is_pdf_relevant(pdf_filename, question):
 
 
     client = OpenAI(
-        api_key=OPENAI_API_KEY,
-        base_url=OPENAI_BASE_URL
+        api_key=LitScanConfig.openai_api_key,
+        base_url=LitScanConfig.openai_base_url
     )
 
     chat_response = client.chat.completions.create(
-        model=OPENAI_MODEL,
+        model=LitScanConfig.openai_model,
         messages=[
             {"role": "user", "content": f"Given the following content from a scientific paper, \
             is it relevant to answering the question: '{question}'? \
@@ -379,6 +383,45 @@ def print_detailed(json_data):
                 print(f"    Content: {json.dumps(value, indent=4)}")
             else:
                 print(f"    Content: {value}")
+
+def get_pmcids_by_author(author, retmax=LitScanConfig.retmax):
+    """
+    Retrieves PubMed Central IDs (PMCIDs) for articles by a specific author.
+
+    This function searches PubMed Central using the NCBI E-utilities API to find articles
+    published by the specified author.
+
+    Args:
+        author (str): The author name to search for (e.g., "Smith J" or "Smith JA")
+        retmax (int, optional): Maximum number of results to return. Defaults to 20.
+
+    Returns:
+        list: A list of PMCIDs as strings. Returns an empty list if no results are found
+              or if the API request fails.
+
+    Note:
+        - Includes a 1 second delay to comply with NCBI E-utilities usage guidelines
+        - Author name format should match PubMed's format (typically "Last FM")
+    """
+    sleep(1)
+    url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
+    
+    #url = url + f'db=pmc&term={author}[Author]+AND+free+fulltext[filter]&retmode=json&retmax={retmax}'
+    url = url + f'db=pmc&term={author}[Author]&retmode=json&retmax={retmax}'
+    print(f'url: {url}')
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        json_response = response.json()
+        if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
+            arr = json_response['esearchresult']['idlist']
+        else:
+            arr = []
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        arr = []
+
+    return arr
 
 if __name__ == "__main__":
 
