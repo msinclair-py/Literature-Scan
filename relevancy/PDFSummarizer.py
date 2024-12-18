@@ -39,7 +39,7 @@ class PDFSummarizer:
         self.max_chunk_tokens = 4000  # Adjust this based on your model's limits
         self.overlap_tokens = 200     # Overlap between chunks to maintain context
 
-    def extract_text(self, pdf_path: str) -> str:
+    def extract_text(self, pdf_path: str, save_text: bool = True) -> str:
         """Extract text content from PDF file and assign to context."""
         text = ""
         with open(pdf_path, 'rb') as file:
@@ -47,6 +47,12 @@ class PDFSummarizer:
             for page in reader.pages:
                 text += page.extract_text()
         self.context = text
+        
+        if save_text:
+            txt_path = pdf_path.rsplit('.', 1)[0] + '.txt'
+            with open(txt_path, 'w', encoding='utf-8') as f:
+                f.write(text)
+
         return text
 
     def _chunk_text(self, text: str) -> list[str]:
