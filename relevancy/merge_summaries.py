@@ -2,6 +2,7 @@ import sys
 sys.path.append("..")
 
 import os
+import argparse
 
 from relevancy.LLMConfig import LLMConfig
 from relevancy.PDFSummarizer import PDFSummarizer
@@ -21,11 +22,15 @@ def read_scores_file(file_path):
     return tuples
 
 def main():
+    parser = argparse.ArgumentParser(description='Process scores file and generate summaries')
+    parser.add_argument('scores_file', help='Path to the scores file', default='RUN001/RTCB/scores.test')
+    args = parser.parse_args()
+
     config = LLMConfig()
     summarizer = PDFSummarizer(config)
     summaries = []
         
-    scores = read_scores_file("RUN001/RTCB/scores.test")
+    scores = read_scores_file(args.scores_file)
     scores = [score for score in scores if score[3] == 3]
 
     for score in scores:
@@ -42,9 +47,10 @@ def main():
     
 
     # pass all the summaries to the summarizer with the question
-    question = "What are the main findings?"
+    summarizer.context = "\n\n".join(summaries)
+    question = "What are the main findings? If there are findings that disagree, please mention them."
     final_summary = summarizer.ask_question(question)
-    print(final_summary)
+    print(f"Final summary: {final_summary}")
 
 
     # Write summaries to file
@@ -53,7 +59,7 @@ def main():
             file.write(summary + "\n")
 
 
-    print(f"conversation history: {summarizer.conversation_history}")
+    #print(f"conversation history: {summarizer.conversation_history}")
     
 
 if __name__ == "__main__":
