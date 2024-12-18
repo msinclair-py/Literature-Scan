@@ -1,5 +1,4 @@
 import requests
-import random
 import subprocess
 from openai import OpenAI
 from xml.etree import ElementTree as ET
@@ -7,8 +6,9 @@ from time import sleep
 import json
 import requests
 import PyPDF2
-import io
 import os
+import tiktoken
+
 
 # NCBI Entrez base URL
 BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
@@ -24,13 +24,9 @@ class LitScanConfig:
     openai_model = "llama31-405b-fp8"
 
     def __init__(self):
-        # OpenAI Settings
-        self.openai_api_key = "cmsc-35360"
-        self.openai_base_url = "http://localhost:9999/v1"
-        self.openai_model = "llama31-405b-fp8"
-
-        # NCBI Settings
-        self.retmax = 20
+        print("Warning: LitScanConfig initialized")
+        raise Exception("LitScanConfig initialized")
+        
 
 def get_pmcids(term, retmax=LitScanConfig.retmax):
     """
@@ -56,12 +52,19 @@ def get_pmcids(term, retmax=LitScanConfig.retmax):
     sleep(1)
     url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
     
-    url = url + f'db=pmc&term={term}[Title/Abstract]+AND+free+fulltext%5bfilter%5d&retmode=json&retmax={retmax}'
-    # print(f'get_pmcids url: {url}')
+    # Build URL parameters
+    db = "pmc"
+    search_term = f"{term}[Title/Abstract]"
+    filter_param = "" # "+AND+free+fulltext%5bfilter%5d" 
+    return_mode = "json"
+    
+    # Combine into final URL
+    url = url + f'db={db}&term={search_term}{filter_param}&retmode={return_mode}&retmax={retmax}'
+    print(f'get_pmcids url: {url}')
+    
     response = requests.get(url, ) #headers=headers, data=data)
 
     if response.status_code == 200:
-        # print(f'The response is {response}')
         json_response = response.json()
         if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
             arr = json_response['esearchresult']['idlist']
@@ -69,7 +72,6 @@ def get_pmcids(term, retmax=LitScanConfig.retmax):
             arr = []
 
     else:
-        # Print the error message
         print(f"Error: {response.status_code} - {response.text}")
         arr = []
 
@@ -96,10 +98,9 @@ def get_pmcids_by_author(author, retmax=LitScanConfig.retmax):
     """
     sleep(1)
     url = f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
-    
     #url = url + f'db=pmc&term={author}[Author]+AND+free+fulltext[filter]&retmode=json&retmax={retmax}'
     url = url + f'db=pmc&term={author}[Author]&retmode=json&retmax={retmax}'
-    print(f'url: {url}')
+    # print(f'url: {url}')
     response = requests.get(url)
 
     if response.status_code == 200:
@@ -149,8 +150,8 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
     url = (f'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
            f'db=pmc&'
            f'term={term_query}'
-           f'+AND+free+fulltext%5bfilter%5d&'
-           f'retmode=json&'
+           # f'+AND+free+fulltext%5bfilter%5d'
+           f'&retmode=json&'
            f'retmax={retmax}')
     
     # print(f'get_pmcids_for_term_and_partner url: {url}')
@@ -165,6 +166,8 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
         print(f"Error: {response.status_code} - {response.text}")
         arr = []
     return arr
+
+
 
 def get_pdf(pmcid, outdir="."):
     """
@@ -229,11 +232,72 @@ def get_pdf(pmcid, outdir="."):
 
     return
 
+def is_pdf_relevant(pdf_filename, question):
+    # Check if file exists and is not empty
+    try:
+        if os.stat(pdf_filename).st_size == 0:
+            os.remove(pdf_filename)
+            return None
+    except FileNotFoundError:
+        print(f"The file {pdf_filename} does not exist")
+        return None
+
+# Extract text from PDF
+    content = ""
+    with open(pdf_filename, 'rb') as file:
+        pdf_reader = PyPDF2.PdfReader(file)
+        try:
+            for page in pdf_reader.pages:
+                content += page.extract_text()
+        except Exception as e:
+            print(f"Error extracting text from {pdf_filename}: {e}")
+            return None
+
+    # return None if no content
+    if not content:
+        return None
+    
+    # print(f"in is_pdf_relevant content: {content[:48]}")
+    # print(f"in is_pdf_relevant question: {question}")
 
 
+    # Split content into chunks
+    chunks = _chunk_text(content, chunk_size=2048*8, overlap_tokens=2048*4)
+    # print(f"in is_pdf_relevant len(chunks): {len(chunks)}")
 
+    # Process each chunk
+    relevant_chunks = []
+    total_chunks = len(chunks)
+    chunk_responses = []
+    relevant_answers = []
+    for i, chunk in enumerate(chunks):
+        try:
+            response = ask_llm_about_relevance(chunk, question)
+            if response and response.choices:
+                answer = response.choices[0].message.content
+                # print(f"in is_pdf_relevant answer: {answer}")
+                is_chunk_relevant = not answer.lower().startswith('no')
+                if is_chunk_relevant:
+                    relevant_chunks += chunk
+                    relevant_answers.append(answer)
+                chunk_responses.append(response)
+        except Exception as e:
+            print(f"Error processing chunk {i+1}: {e}")
+            continue
 
-# tools
+    # If no valid responses, return None
+    if not chunk_responses:
+        return None
+
+    # Determine overall relevance (if > 0% of chunks are relevant) PARAMATERIZE THIS
+    is_relevant = (len(relevant_chunks) / total_chunks) > 0.0 if total_chunks > 0 else False
+  
+    # Create a combined response
+    if is_relevant:
+        return ask_llm_about_relevance(" ".join(relevant_answers), question)
+    else:
+        return None
+
 def ask_llm_about_relevance(content, question):
     """
     Asks the LLM whether a given content is relevant to answering a specific question.
@@ -276,30 +340,11 @@ def ask_llm_about_relevance(content, question):
             Please respond with 'Yes' or 'No' followed by a brief explanation.\n\nContent: {content}..."},
         ],
         temperature=0.0,
-        max_tokens=2056,
+        # max_tokens=2056,
     )
     return chat_response
 
-def is_pdf_relevant(pdf_filename, question):
-    try:
-        if os.stat(pdf_filename).st_size == 0:
-            os.remove(pdf_filename)
-            return None
-    except FileNotFoundError:
-        print(f"The file {pdf_filename} does not exist")
-        return None
 
-    with open(pdf_filename, 'rb') as file:
-        pdf_reader = PyPDF2.PdfReader(file)
-        content = ""
-        try:
-            for page in pdf_reader.pages:
-                content += page.extract_text()
-        except Exception as e:
-            print(f"Error extracting text from {pdf_filename}: {e}")
-            return None
-
-    return ask_llm_about_relevance(content, question)
 
 def get_string_id(protein_name):
     """
@@ -439,6 +484,8 @@ def get_string_interaction_partners(protein_name, limit=10):
         print(f"Error accessing STRING database: {e}")
         return []
 
+
+
 def print_detailed(json_data):
     # Print detailed structure information
     print("\nDetailed functional data structure:")
@@ -451,23 +498,67 @@ def print_detailed(json_data):
             else:
                 print(f"    Content: {value}")
 
+def split_content(content, chunk_size=2048):
+    # Split content into chunks
+    chunks = []
+    paragraphs = content.split('\n\n')
+    current_chunk = []
+    current_size = 0
 
+    for para in paragraphs:
+        # Rough estimate of tokens (words / 0.75)
+        para_size = len(para.split()) // 0.75
+
+        # If the current chunk is too big, add it to the list and start a new chunk
+        if current_size + para_size > chunk_size and current_chunk:
+            chunks.append(' '.join(current_chunk))
+            current_chunk = [para]
+            current_size = para_size
+        else:
+            current_chunk.append(para)
+            current_size += para_size
+
+    if current_chunk:
+        chunks.append(' '.join(current_chunk))
+
+    return chunks
+
+def _chunk_text(text: str, chunk_size=2048*8, overlap_tokens=2048*4) -> list[str]:
+    """Split text into overlapping chunks based on token count"""
+    chunks = []
+    tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
+    tokens = tokenizer.encode(text)
+
+    start = 0
+    while start < len(tokens):
+        # Get chunk of tokens
+        end = start + chunk_size
+        chunk_tokens = tokens[start:end]
+
+        # Convert chunk tokens back to text
+        chunk_text = tokenizer.decode(chunk_tokens)
+        chunks.append(chunk_text)
+
+        # Move start position, accounting for overlap
+        start = end - overlap_tokens
+
+    return chunks
+    
 
 if __name__ == "__main__":
 
-    # print(get_string_publications("RTCB_HUMAN"))
-
-    functional_data = get_string_functional_annotation("RTCB_HUMAN")
+    # get functional annotations
+    functional_data = get_string_functional_annotation("WRN")
     for i, item in enumerate(functional_data):
         print(f'item {i}: {item["category"]}\t{item["description"]}')
 
-
-    interaction_data = get_string_interaction_partners("RTCB_HUMAN")
+    # get interaction partners
+    interaction_data = get_string_interaction_partners("WRN")
     for i, item in enumerate(interaction_data):
-            #print(f'item {i}: {item}')
-            print(f'item {i}: {item["preferredName_B"]}')
+        print(f'item {i}: {item["preferredName_B"]}')
 
-
+    # get pmcids
+    pmids = []
     for target, partner in ([['WRN', 'DNA2']]):
         pmids = get_pmcids_for_term_and_partner(target, partner, title_only=True)
         print(f'{target} AND {partner} (title only): {pmids}, {len(pmids)}')
@@ -479,6 +570,17 @@ if __name__ == "__main__":
         print(f'{target} AND {partner} (title and abstract): {pmids}, {len(pmids)}')
         sleep(1)
 
+    # get pdfs
+    print("---------------get pdfs-----------------")
+    for pmcid in pmids:
+        print(f"pmcid: {pmcid}")
+        get_pdf(pmcid)
 
+    # ask llm about relevance
+    print("---------------ask llm about relevance-----------------")
+    for pmcid in pmids:
+        response = is_pdf_relevant(f"{pmcid}.pdf", "What is the role of WRN in Cancer?")
+        print(f'{response.choices[0].message.content}' if response else "No response")
+    print("--------------------------------")
 
-    print(is_pdf_relevant("10124711.pdf", "What is the role of RTCB in DNA repair?"))
+    
