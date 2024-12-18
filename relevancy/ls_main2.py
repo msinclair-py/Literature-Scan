@@ -48,7 +48,7 @@ get_partners = args.get_partners
 logfile = args.logfile
 
 # For testing
-get_partners = True
+# get_partners = True
 
 # Configure logging to both file and console
 logging.basicConfig(
