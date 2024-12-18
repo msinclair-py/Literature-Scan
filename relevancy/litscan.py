@@ -11,7 +11,7 @@ import tiktoken
 
 
 # NCBI Entrez base URL
-BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
+# BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
 
 # Replace with your own NCBI API key (optional, but speeds up requests)
 # API_KEY = "your_api_key"
@@ -579,6 +579,7 @@ if __name__ == "__main__":
     # ask llm about relevance
     print("---------------ask llm about relevance-----------------")
     for pmcid in pmids:
+        print(f"is {pmcid} relevant?")
         response = is_pdf_relevant(f"{pmcid}.pdf", "What is the role of WRN in Cancer?")
         print(f'{response.choices[0].message.content}' if response else "No response")
     print("--------------------------------")
