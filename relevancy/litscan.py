@@ -232,6 +232,27 @@ def get_pdf(pmcid, outdir="."):
 
     return
 
+def extract_pdf_text(pdf_filename):
+    """
+    Extracts text content from a PDF file.
+
+    Args:
+        pdf_filename (str): Path to the PDF file
+
+    Returns:
+        str: Extracted text content from the PDF, or None if extraction fails
+    """
+    try:
+        with open(pdf_filename, 'rb') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            content = ""
+            for page in pdf_reader.pages:
+                content += page.extract_text()
+            return content if content else None
+    except Exception as e:
+        print(f"Error extracting text from {pdf_filename}: {e}")
+        return None
+
 def is_pdf_relevant(pdf_filename, question):
     # Check if file exists and is not empty
     try:
@@ -241,29 +262,16 @@ def is_pdf_relevant(pdf_filename, question):
     except FileNotFoundError:
         print(f"The file {pdf_filename} does not exist")
         return None
+    
 
-# Extract text from PDF
-    content = ""
-    with open(pdf_filename, 'rb') as file:
-        pdf_reader = PyPDF2.PdfReader(file)
-        try:
-            for page in pdf_reader.pages:
-                content += page.extract_text()
-        except Exception as e:
-            print(f"Error extracting text from {pdf_filename}: {e}")
-            return None
-
-    # return None if no content
+    # Extract text from PDF
+    content = extract_pdf_text(pdf_filename)
     if not content:
         return None
     
-    # print(f"in is_pdf_relevant content: {content[:48]}")
-    # print(f"in is_pdf_relevant question: {question}")
-
-
     # Split content into chunks
     chunks = _chunk_text(content, chunk_size=2048*8, overlap_tokens=2048*4)
-    # print(f"in is_pdf_relevant len(chunks): {len(chunks)}")
+
 
     # Process each chunk
     relevant_chunks = []
@@ -544,6 +552,35 @@ def _chunk_text(text: str, chunk_size=2048*8, overlap_tokens=2048*4) -> list[str
 
     return chunks
     
+
+def extract_html_text(html_content):
+    """
+    Extracts text content from HTML string.
+
+    Args:
+        html_content (str): HTML content to extract text from
+
+    Returns:
+        str: Extracted text content from the HTML, or None if extraction fails
+    """
+    try:
+        from bs4 import BeautifulSoup
+        
+        # Parse HTML and extract text
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Remove script and style elements
+        for script in soup(["script", "style"]):
+            script.decompose()
+            
+        # Get text and normalize whitespace
+        content = soup.get_text(separator=' ')
+        content = ' '.join(content.split())
+        
+        return content if content else None
+    except Exception as e:
+        print(f"Error extracting text from HTML: {e}")
+        return None
 
 if __name__ == "__main__":
 
