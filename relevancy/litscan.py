@@ -232,27 +232,6 @@ def get_pdf(pmcid, outdir="."):
 
     return
 
-def extract_pdf_text(pdf_filename):
-    """
-    Extracts text content from a PDF file.
-
-    Args:
-        pdf_filename (str): Path to the PDF file
-
-    Returns:
-        str: Extracted text content from the PDF, or None if extraction fails
-    """
-    try:
-        with open(pdf_filename, 'rb') as file:
-            pdf_reader = PyPDF2.PdfReader(file)
-            content = ""
-            for page in pdf_reader.pages:
-                content += page.extract_text()
-            return content if content else None
-    except Exception as e:
-        print(f"Error extracting text from {pdf_filename}: {e}")
-        return None
-
 def is_pdf_relevant(pdf_filename, question):
     # Check if file exists and is not empty
     try:
@@ -552,6 +531,26 @@ def _chunk_text(text: str, chunk_size=2048*8, overlap_tokens=2048*4) -> list[str
 
     return chunks
     
+def extract_pdf_text(pdf_filename):
+    """
+    Extracts text content from a PDF file.
+
+    Args:
+        pdf_filename (str): Path to the PDF file
+
+    Returns:
+        str: Extracted text content from the PDF, or None if extraction fails
+    """
+    try:
+        with open(pdf_filename, 'rb') as file:
+            pdf_reader = PyPDF2.PdfReader(file)
+            content = ""
+            for page in pdf_reader.pages:
+                content += page.extract_text()
+            return content if content else None
+    except Exception as e:
+        print(f"Error extracting text from {pdf_filename}: {e}")
+        return None
 
 def extract_html_text(html_content):
     """
@@ -581,6 +580,8 @@ def extract_html_text(html_content):
     except Exception as e:
         print(f"Error extracting text from HTML: {e}")
         return None
+
+
 
 if __name__ == "__main__":
 
