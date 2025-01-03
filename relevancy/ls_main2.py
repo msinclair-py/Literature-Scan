@@ -57,7 +57,7 @@ logging.basicConfig(
         # logging.StreamHandler()  # This will continue logging to console
     ]
 )
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("ls_main2")
 logger.info(f'Logging to file: {logfile}')
 logger.info(f'Arguments: {args}')
 
