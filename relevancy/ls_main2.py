@@ -37,18 +37,16 @@ class Config:
     PARTNER_LIMIT = 50
     PARTNER_SCORE_THRESHOLD = 0.925
 
+
 # Parse arguments
 args     = parser.parse_args()
 retmax   = args.retmax
 template = args.template
 terms    = args.terms
 no_delete   = args.no_delete # defaults to False if not set
-
 get_partners = args.get_partners
 logfile = args.logfile
 
-# For testing
-# get_partners = True
 
 # Configure logging to both file and console
 logging.basicConfig(
@@ -65,7 +63,6 @@ logger.info(f'Arguments: {args}')
 
 
 
-# Add this helper function after the argument parsing and before main()
 def process_relevancy_check(pmid, question, delete_if_no=False):
     """
     Process a relevancy check for a PDF and return the score (-1 for no, 1 for yes).
@@ -221,7 +218,7 @@ def main():
         pmids = [] 
         partner_dict = {}  # key is partner, value is list of unvalidated PMIDs.
 
-        # Part 1: Get pmids for term AND each partner
+        # Get pmids for term AND each partner
         if get_partners == True:
             partners = get_relevant_partners(term)
 
@@ -238,7 +235,7 @@ def main():
             else:
                 logger.info(f"No partners found for {term}")
 
-        # Get PMIDs for the term
+        # Get pmids for term AND NO partners
         else:
             pmids = get_pmcids(term, retmax=retmax)
             logger.info(f"Found {len(pmids)} PMIDs for gene {term}")
