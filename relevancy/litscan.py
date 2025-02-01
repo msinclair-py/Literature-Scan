@@ -19,9 +19,9 @@ import tiktoken
 class LitScanConfig:
     """Configuration class to manage API endpoints and settings"""
     retmax = 20
-    openai_api_key = "cmsc-35360"
-    openai_base_url = "http://localhost:9999/v1"
-    openai_model = "llama31-405b-fp8"
+    openai_api_key = "EMPTY"
+    openai_base_url = "http://localhost:8888/v1"
+    openai_model = "MODEL"
 
     def __init__(self):
         print("Warning: LitScanConfig initialized")
