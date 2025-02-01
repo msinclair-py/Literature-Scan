@@ -6,9 +6,15 @@ from time import sleep
 import json
 import requests
 import PyPDF2
-import os
+import os, sys
 import tiktoken
 
+# Add the directory containing the current script to Python path
+# Or to get the parent directory (if modules are one level up)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from relevancy.LLMConfig import LLMConfig
+config = LLMConfig()
 
 # NCBI Entrez base URL
 # BASE_URL = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/"
@@ -16,15 +22,30 @@ import tiktoken
 # Replace with your own NCBI API key (optional, but speeds up requests)
 # API_KEY = "your_api_key"
 
+import logging
+# Get a child logger that inherits from ls_main
+if __name__ == "__main__":
+    logging.basicConfig(
+            level=logging.INFO,
+            format='%(asctime)s - %(levelname)s - %(message)s',
+            handlers=[
+                logging.FileHandler(config.logfile),
+                # logging.StreamHandler()  # This will continue logging to console
+                ]
+            )
+    logger = logging.getLogger('litscan')
+else:
+    logger = logging.getLogger('ls_main2.litscan')
+
 class LitScanConfig:
     """Configuration class to manage API endpoints and settings"""
-    retmax = 20
+    retmax = 40 
     openai_api_key = "EMPTY"
-    openai_base_url = "http://localhost:8888/v1"
-    openai_model = "MODEL"
+    openai_base_url = "http://lambda13.cels.anl.gov:9999/v1"
+    openai_model = "llama31-405b-fp8"
 
     def __init__(self):
-        print("Warning: LitScanConfig initialized")
+        logger.warn("Warning: LitScanConfig initialized")
         raise Exception("LitScanConfig initialized")
         
 
@@ -60,11 +81,11 @@ def get_pmcids(term, retmax=LitScanConfig.retmax):
     
     # Combine into final URL
     url = url + f'db={db}&term={search_term}{filter_param}&retmode={return_mode}&retmax={retmax}'
-    print(f'get_pmcids url: {url}')
+    logger.info(f'get_pmcids url: {url}')
     
     response = requests.get(url, ) #headers=headers, data=data)
 
-    if response.status_code == 200:
+    if response.status_code == 20:
         json_response = response.json()
         if 'esearchresult' in json_response and 'idlist' in json_response['esearchresult']:
             arr = json_response['esearchresult']['idlist']
@@ -72,7 +93,7 @@ def get_pmcids(term, retmax=LitScanConfig.retmax):
             arr = []
 
     else:
-        print(f"Error: {response.status_code} - {response.text}")
+        logger.warn(f"Error: {response.status_code} - {response.text}")
         arr = []
 
     return arr
@@ -110,7 +131,7 @@ def get_pmcids_by_author(author, retmax=LitScanConfig.retmax):
         else:
             arr = []
     else:
-        print(f"Error: {response.status_code} - {response.text}")
+        logger.warn(f"Error: {response.status_code} - {response.text}")
         arr = []
 
     return arr
@@ -163,7 +184,7 @@ def get_pmcids_for_term_and_partner(term, partner, title_only=False, abstract_on
         else:
             arr = []
     else:
-        print(f"Error: {response.status_code} - {response.text}")
+        logger.warn(f"Error: {response.status_code} - {response.text}")
         arr = []
     return arr
 
@@ -191,7 +212,7 @@ def get_pdf(pmcid, outdir="."):
     """
 
     if os.path.exists(f'{outdir}/{pmcid}.pdf'):
-        print(f'{outdir}/{pmcid}.pdf already exists')
+        logger.info(f'{outdir}/{pmcid}.pdf already exists')
         return
     
     sleep(1)
@@ -215,6 +236,8 @@ def get_pdf(pmcid, outdir="."):
 
     wget_command = [wget_path,
            f'--user-agent="Mozilla/5.0 (Windows NT 5.2; rv:2.0.1) Gecko/20100101 Firefox/4.0.1"',
+           f'--waitretry=1',
+           f'-t 3',
            f'-q',
            f'-l1',
            f'--no-parent',
@@ -226,9 +249,10 @@ def get_pdf(pmcid, outdir="."):
     try:
         subprocess.run(wget_command, check=True, ) #stderr=subprocess.DEVNULL)
         # print(f"{pmcid}.pdf downloaded successfully!")
+        logger.info(f"{pmcid}.pdf downloaded successfully!")
     except subprocess.CalledProcessError as e:
-        print(" ".join(wget_command), "failed")
-        print(f"Failed to download {pmcid} PDF. Error: {e}")
+        logger.info(" ".join(wget_command), "failed")
+        logger.warn(f"Failed to download {pmcid} PDF. Error: {e}")
 
     return
 
@@ -239,16 +263,18 @@ def is_pdf_relevant(pdf_filename, question):
             os.remove(pdf_filename)
             return None
     except FileNotFoundError:
-        print(f"The file {pdf_filename} does not exist")
+        logger.info(f"The file {pdf_filename} does not exist")
         return None
     
 
     # Extract text from PDF
+    logger.info(f'extracting text from {pdf_filename}')
     content = extract_pdf_text(pdf_filename)
     if not content:
         return None
     
     # Split content into chunks
+    logger.info(f'splitting content into chunks')
     chunks = _chunk_text(content, chunk_size=2048*8, overlap_tokens=2048*4)
 
 
@@ -269,7 +295,7 @@ def is_pdf_relevant(pdf_filename, question):
                     relevant_answers.append(answer)
                 chunk_responses.append(response)
         except Exception as e:
-            print(f"Error processing chunk {i+1}: {e}")
+            logger.warn(f"Error processing chunk {i+1}: {e}")
             continue
 
     # If no valid responses, return None
@@ -314,11 +340,13 @@ def ask_llm_about_relevance(content, question):
         - Uses temperature=0.0 for more consistent, deterministic responses
         - Configured to use the LLM settings from LitScanConfig
     """
+    logger.info(f'establishing client on base_url: {LitScanConfig.openai_base_url}')
     client = OpenAI(
         api_key=LitScanConfig.openai_api_key,
         base_url=LitScanConfig.openai_base_url
     )
 
+    logger.info(f'requesting chat.completion')
     chat_response = client.chat.completions.create(
         model=LitScanConfig.openai_model,
         messages=[
@@ -376,7 +404,7 @@ def get_string_id(protein_name):
         string_id = protein_data[0]['stringId']
         
     except requests.exceptions.RequestException as e:
-        print(f"Error accessing STRING database: {e}")
+        logger.warn(f"Error accessing STRING database: {e}")
         return []
         
     return string_id
@@ -405,7 +433,7 @@ def get_string_publications_by_id(string_id):
         # print(f'length of publications: {len(publications)}')
   
     except requests.exceptions.RequestException as e:
-        print(f"Error accessing STRING database: {e}")
+        logger.warn(f"Error accessing STRING database: {e}")
         return []
     return pub_response.json()
 
@@ -437,7 +465,7 @@ def get_string_functional_annotation(protein_name):
         return functional_data
         
     except requests.exceptions.RequestException as e:
-        print(f"Error accessing STRING database: {e}")
+        logger.warn(f"Error accessing STRING database: {e}")
         return []
 
 def get_string_interaction_partners(protein_name, limit=10):
@@ -468,7 +496,7 @@ def get_string_interaction_partners(protein_name, limit=10):
         return interaction_partners
         
     except requests.exceptions.RequestException as e:
-        print(f"Error accessing STRING database: {e}")
+        logger.warn(f"Error accessing STRING database: {e}")
         return []
 
 
@@ -549,7 +577,7 @@ def extract_pdf_text(pdf_filename):
                 content += page.extract_text()
             return content if content else None
     except Exception as e:
-        print(f"Error extracting text from {pdf_filename}: {e}")
+        logger.warn(f"Error extracting text from {pdf_filename}: {e}")
         return None
 
 def extract_html_text(html_content):
@@ -578,7 +606,7 @@ def extract_html_text(html_content):
         
         return content if content else None
     except Exception as e:
-        print(f"Error extracting text from HTML: {e}")
+        logger.warn(f"Error extracting text from HTML: {e}")
         return None
 
 
