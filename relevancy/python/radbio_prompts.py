@@ -1,5 +1,13 @@
 """Prompts for radiation and protein interaction analysis.
 
+TODO: What are the single point mutations that are responsible for
+        the cancer phenotype. How do these mutations affect phosphorlyation
+        and or methylation. This helps assess the molecular mechanisms at play.
+
+        The ultimate question is going to be to propose binders. Therefore,
+        because many important protein interfaces exist, we need to be able to
+        focus our efforts on the hypothesized most important interfaces.
+
 This module contains prompt templates for analyzing protein interactions,
 particularly in the context of DNA damage and repair mechanisms.
 """
