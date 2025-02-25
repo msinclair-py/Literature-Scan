@@ -31,7 +31,7 @@ Here is the text:
 {ANSWERS}
 '''.strip()
 
-MECHANSITIC_MODEL_PROMPT = '''
+MECHANISTIC_MODEL_PROMPT = '''
 I recently parsed the text out of several PDF files. These PDF files are research 
 articles by authors who study genes and proteins involved in {SUBJECT}.
 
@@ -147,11 +147,9 @@ Final Task:
 "Please produce one cohesive summary that reflects all the important information from these summaries, while preserving every inline citation as originally provided. Ensure the final narrative flows naturally and retains all the critical details along with their associated inline citations."
 '''
 
-
-
 PROMPTS = {
     'condense': CONDENSE_PROMPT,
-    'mechanistic_model': MECHANSITIC_MODEL_PROMPT,
+    'mechanistic_model': MECHANISTIC_MODEL_PROMPT,
     'mechanistic_model_2': MECHANISTIC_MODEL_PROMPT_2,
     'chunk_merge': CHUNK_MERGE,
     'chunk_merge_2': CHUNK_MERGE_2,

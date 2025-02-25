@@ -92,9 +92,6 @@ class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], operator.add]
     sender: str
 
-
-
-
 ## Define Agent Nodes ##
 import functools
 from langchain_core.messages import AIMessage

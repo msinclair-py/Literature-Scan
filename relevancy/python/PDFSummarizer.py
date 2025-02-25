@@ -1,32 +1,36 @@
-from relevancy.LLMConfig import LLMConfig
-
-
-import PyPDF2
-import tiktoken
 from openai import OpenAI
+from pathlib import Path
+import PyPDF2
+from Configs import LLMConfig
+import tiktoken
+from typing import Union
 
-"""PDFSummarizer provides functionality to extract, summarize and analyze PDF documents using LLMs.
-
-The class handles:
-- PDF text extraction
-- Text chunking to fit within LLM context windows 
-- Document summarization
-- Interactive Q&A about the document content
-- Conversation history tracking
-
-Example usage:
-    config = LLMConfig()
-    summarizer = PDFSummarizer(config)
-    
-    # Extract and summarize PDF
-    summarizer.extract_text("paper.pdf")
-    summary = summarizer.summarize()
-    
-    # Ask questions
-    answer = summarizer.ask_question("What are the main findings?")
-"""
+PathLike = Union[str, Path]
+FileLike = Union[str, Path, List[str]]
 
 class PDFSummarizer:
+    """
+    PDFSummarizer provides functionality to extract, summarize and analyze PDF 
+    documents using LLMs.
+    
+    The class handles:
+    - PDF text extraction
+    - Text chunking to fit within LLM context windows 
+    - Document summarization
+    - Interactive Q&A about the document content
+    - Conversation history tracking
+    
+    Example usage:
+        config = LLMConfig()
+        summarizer = PDFSummarizer(config)
+        
+        # Extract and summarize PDF
+        summarizer.extract_text("paper.pdf")
+        summary = summarizer.summarize()
+        
+        # Ask questions
+        answer = summarizer.ask_question("What are the main findings?")
+    """
     def __init__(self, config: LLMConfig):
         self.config = config
         self.client = OpenAI(
@@ -174,3 +178,62 @@ class PDFSummarizer:
                 f.write("-" * 50 + "\n")
 
         return output_path
+
+class BulkPDFExtractor:
+    """
+    For processing multiple PDF files at once for text extraction.
+    """
+    def __init__(self, directory: PathLike, files: FileLike,
+                 output_directory: PathLike):
+        self.directory = directory
+        self.output_directory = output_directory
+
+        if isinstance(files, list):
+            _files = files
+        else:
+            _files = [line.strip() for line in open(files).readlines()]
+
+        self.files = set(files)
+
+    def process_pdfs(self) -> None:
+        for pdf_file in self.directory.glob('*.pdf'):
+            name = pdb_file.name.strip('.pdf')
+
+            if name in self.files:
+                print('Processing: {pdf_file}')
+                text = extract_pdf_text(pdf_file) # this currently comes from litscan.py
+                output_file = self.output_dir / name + '.txt'
+
+                with open(str(output_file, 'w')) as f:
+                    f.write(text)
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) < 2:
+        raise RuntimeError('Usage: python PDFSummarizer.py <pdf_file> <*args:terms>')
+
+    config = LLMConfig
+    summarizer = PDFSummarizer(config)
+
+    pdf = sys.argv[1]
+    if len(sys.argv) > 2:
+        term = sys.argv[2]
+    else:
+        term = None
+
+    summarizer.extract_text(pdf)
+    print('\nInitial Summary:')
+    print(summarizer.summarize())
+
+    # Interactive question loop
+    print('\nEnter questions about the document (or "quit" to exit):')
+    while True:
+        question = input('\nQuestion: ').strip()
+        if question.lower() == 'quit':
+            break
+        print('\nAnswer:')
+        print(summarizer.ask_question(question))
+
+    # save conversation when exiting
+    output_file = summarizer.save_conversation()
+    print(f'\nConversation saved to: {output_file}')

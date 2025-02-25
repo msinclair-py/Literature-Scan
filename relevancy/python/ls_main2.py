@@ -3,6 +3,7 @@ from litscan import get_pmcids
 from litscan import get_pmcids_for_term_and_partner
 from litscan import get_pdf
 from litscan import is_pdf_relevant
+from Configs import PPIScanConfig as Config
 
 import os
 from time import sleep
@@ -28,14 +29,6 @@ parser.add_argument("--get_partners", action="store_true", default=False, help="
 parser.add_argument("--logfile", type=str, 
                    default=default_logfile,
                    help="Path to the log file (default: %(default)s)")
-
-
-class Config:
-    """Configuration settings for the literature scanning application."""
-
-    # Partner interaction settings
-    PARTNER_LIMIT = 50
-    PARTNER_SCORE_THRESHOLD = 0.925
 
 
 # Parse arguments

@@ -4,7 +4,7 @@ sys.path.append("..")
 import os
 import argparse
 
-from relevancy.LLMConfig import LLMConfig
+from Configs import LLMConfig
 from relevancy.PDFSummarizer import PDFSummarizer
 from ast import literal_eval
 
