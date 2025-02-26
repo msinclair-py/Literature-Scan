@@ -2,6 +2,7 @@
 *.pdf
 relevancy/*.pdf
 relevancy/targets
+relevancy/python/*papers
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

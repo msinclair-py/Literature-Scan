@@ -1,5 +1,4 @@
 model="meta-llama/Meta-Llama-3.1-70B-Instruct"
-
 import getpass
 import os
 
@@ -35,13 +34,6 @@ def create_agent(llm, tools, system_message: str):
     return prompt | llm.bind_tools(tools)
 
 
-
-
-
-
-
-
-
 ## Define the tools ##
 from langchain_core.tools import tool
 
@@ -68,7 +60,7 @@ from typing import Annotated
 @tool
 def python_repl(code: Annotated[str, "The python code to execute to search pubmed central"]):
     '''Use this to execute python code. If you want to see the output of a value,
-    you shuold print it out with `print(...)`. THis is visible to the user.'''
+    you should print it out with `print(...)`. This is visible to the user.'''
 
     try:
         result = repl.run(code)
@@ -76,8 +68,6 @@ def python_repl(code: Annotated[str, "The python code to execute to search pubme
         return f'Failed to execute. Error: {repr(e)}'
     result_str = f"Successfully executed:\n\`\`\`python\n{code}\n\`\`\`\nStdout: {result}"
     return (result_str + "\n\nIf you have completed all tasks, respond with FINAL ANSWER.")
-
-
 
 
 ## Define State ##
@@ -125,5 +115,4 @@ research_agent = create_agent(
     [get_pmcids_tool],
     system_message="You should provide accurate data for the chart_generator to use.",
 )
-
 
