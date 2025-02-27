@@ -1,9 +1,9 @@
+from configs import LLMConfig
 from openai import OpenAI
 from pathlib import Path
 import PyPDF2
-from Configs import LLMConfig
 import tiktoken
-from typing import Union
+from typing import List, Union
 
 PathLike = Union[str, Path]
 FileLike = Union[str, Path, List[str]]
@@ -39,9 +39,9 @@ class PDFSummarizer:
         )
         self.context = ""
         self.conversation_history = []
-        self.tokenizer = tiktoken.encoding_for_model("gpt-3.5-turbo")
-        self.max_chunk_tokens = 4000  # Adjust this based on your model's limits
-        self.overlap_tokens = 200     # Overlap between chunks to maintain context
+        self.tokenizer = tiktoken.encoding_for_model("gpt-4o-mini")
+        self.max_chunk_tokens = 15000  # Adjust this based on your model's limits
+        self.overlap_tokens = 5000     # Overlap between chunks to maintain context
 
     def extract_text(self, pdf_path: str, save_text: bool = True) -> str:
         """Extract text content from PDF file and assign to context."""
@@ -208,11 +208,12 @@ class BulkPDFExtractor:
                     f.write(text)
 
 if __name__ == '__main__':
+    import os
     import sys
     if len(sys.argv) < 2:
         raise RuntimeError('Usage: python PDFSummarizer.py <pdf_file> <*args:terms>')
 
-    config = LLMConfig
+    config = LLMConfig()
     summarizer = PDFSummarizer(config)
 
     pdf = sys.argv[1]

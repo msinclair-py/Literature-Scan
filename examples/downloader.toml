@@ -1,0 +1,28 @@
+[LLM_params]
+model = 'gpt-4o-mini'
+temperature = 0.0
+base_url = none # can set to locally hosted model
+logfile = 'journal_club.log'
+
+[papers]
+term = 'NSUN2'
+retmax = 30
+pmcids = none # make this a list of paths to local papers
+outdir = 'papers'
+
+[queries]
+[queries.q1]
+question = 'Does this paper discuss specific residues of REPLACE by residue ID?'
+weight = 3
+
+[queries.q2]
+question = 'Does this paper discuss biologically relevant binding interfaces of REPLACE?'
+weight = 1
+
+[queries.q3]
+question = 'Does this paper discuss one or more point mutants of REPLACE related to dysfunction?'
+weight = 2
+
+[queries.q4]
+question = 'Does this paper discuss intrinsically disorded proteins or regions?'
+weight = 1

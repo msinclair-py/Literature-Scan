@@ -1,8 +1,9 @@
 # pdf files
 *.pdf
 relevancy/*.pdf
-relevancy/targets
-relevancy/python/*papers
+relevancy/*papers
+benchmark/
+benchmarking.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

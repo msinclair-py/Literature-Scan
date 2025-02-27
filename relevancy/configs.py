@@ -1,13 +1,15 @@
 from dataclasses import dataclass
+import os
+from typing import Union
 
 @dataclass
 class LLMConfig:
     """Configuration settings for LLM interactions"""
-    api_key: str
-    base_url: str
-    model: str
-    temperature: float
-    logfile: str
+    api_key: str = os.environ.get('OPENAI_API_KEY')
+    base_url: Union[str, None] = None
+    model: str = 'gpt-4o-mini'
+    temperature: float = 0.
+    logfile: str = 'relevancy.log'
 
 @dataclass
 class LitScanConfig:
