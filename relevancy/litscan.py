@@ -137,11 +137,11 @@ class LitScanner:
         question.
         """
         # Process each chunk
-        relevant_chunks = []
         total_chunks = len(chunks)
-        chunk_responses = [[] * total_chunks]
-        relevant_answers = [[None] * total_chunks] * len(questions)
-        scores = [[0] * total_chunks] * len(questions)
+        chunk_responses = [[] for _ in range(total_chunks)]
+        relevant_answers = [[None for c in range(total_chunks)] for _ in range(len(questions))]
+        scores = [0 for _ in range(total_chunks)]
+        print('\n'.join(questions))
         for i, chunk in enumerate(chunks):
             try:
                 responses = self.ask_llm_about_relevance(chunk, questions)
@@ -149,20 +149,19 @@ class LitScanner:
                 for j, response in enumerate(responses):
                     if response and response.choices:
                         answer = response.choices[0].message.content
-                        is_chunk_relevant = not answer.lower().startswith('no')
+                        print(answer) # only prints if we have an answer
+                        is_chunk_relevant = answer.lower().startswith('yes')
+                        
                         if is_chunk_relevant:
                             if weights is None:
-                                scores[i] += 1
-                                relevant_chunks += chunk
+                                scores[i] += 1 / len(questions)
                             else:
-                                scores[j][i] += weights[j]
-                                # add chunk if it isn't already stored
-                                if not relevant_chunks:
-                                    relevant_chunks += chunk
-                                elif relevant_chunks[-1] != chunk:
-                                    relevant_chunks += chunk
-
-                            relevant_answers[j][i] = answer
+                                scores[i] += weights[j] / sum(weights)
+                            
+                            try:
+                                relevant_answers[i][j] = [answer]
+                            except IndexError: # if only 1 chunk total
+                                relevant_answers[j] = [answer]
 
                         chunk_responses[i].append(response)
 
@@ -174,40 +173,52 @@ class LitScanner:
         if not any(chunk_responses):
             return None
     
-        # Determine overall relevance (if > 0% of chunks are relevant)
-        try:
-            is_relevant = (len(relevant_chunks) / total_chunks) > self.relevancy_cutoff
-        except ZeroDivisionError:
-            return None
-      
+        # Determine overall relevance
+        if any([score > self.relevancy_cutoff for score in scores]):
+            is_relevant = True
+        elif sum(scores) > self.relevancy_cutoff:
+            is_relevant = True
+        else:
+            is_relevant = False
+            results = {'score': 0.0, 'response': 'No response'}
+            
         # Create a combined response
         if is_relevant:
-            mean_score = [sum(score) / total_chunks for score in scores]
-            results = {}
-            for i in range(len(questions)):
-                answer = " ".join([ans for ans in relevant_answers[i] if ans is not None]) 
-                if answer:
-                    results.update(
-                        {
-                            questions[i]: {
-                                'score': mean_score[i], 
-                                'response': self.ask_llm_about_relevance(answer, questions[i])
-                            }
-                        }
-                    )
-                else:
-                    results.update(
-                        {
-                            questions[i]: {
-                                'score': mean_score[i],
-                                'response': 'No response'
-                            }
-                        }
-                    )
+            results = {'score': scores[i]}
 
-            return results
+            As, Qs = [], []
+            for i, answer in enumerate(relevant_answers):
+                for j, ans in enumerate(answer):
+                    if ans is not None:
+                        As.append(ans)
+                        Qs.append(questions[j])
 
-        return None
+            if len(As) > 1: # multiple answers must be synthesized together
+                response = self.synthesize_response(As, Qs)
+                synth_response = response
+
+                if synth_response is None: # failed to synthesize an answer
+                    synth_response = '\n'.join(As)
+
+                results.update(
+                    {
+                        'response': synth_response
+                    }
+                )
+            elif As: # only one answer
+                results.update(
+                    {
+                        'response': As[0]
+                    }
+                )
+            else: # no answers
+                results.update(
+                    {
+                        'response': 'No response'
+                    }
+                )
+
+        return results
 
     def ask_llm_about_relevance(self, content, questions):
         """
@@ -263,26 +274,49 @@ class LitScanner:
             )
 
             responses.append(chat_response)
+            sleep(1)
 
         return responses
 
-    def print_detailed(json_data):
-        # Print detailed structure information
-        print("\nDetailed functional data structure:")
-        for i, item in enumerate(json_data):
-            print(f"\nItem {i}:")
-            for key, value in item.items():
-                print(f"  {key}: {type(value)}")
-                if isinstance(value, (list, dict)):
-                    print(f"    Content: {json.dumps(value, indent=4)}")
-                else:
-                    print(f"    Content: {value}")
+    def synthesize_response(self, responses, questions):
+        self.logger.info(f'establishing client on base_url: {self.config.openai_base_url}')
+        client = OpenAI(
+            api_key=self.config.openai_api_key,
+            base_url=self.config.openai_base_url
+        )
+    
+        self.logger.info(f'requesting chat.completion')
+    
+        content = []
+        for question, response in zip(questions, responses):
+            if 'No response' in response or response == None:
+                continue
+            else:
+                content.append(f'Question: {question}\nResponse: {response}\n')
+
+        content = '\n'.join(content)
+        
+        chat_response = client.chat.completions.create(
+            model=self.config.openai_model,
+            messages=[
+                {'role': 'user', 'content': f'Please read the following content \
+                 which consists of pairs of questions and responses regarding a \
+                 scientific paper. Combine these responses into a single summary \
+                 which still answers all questions provided. Content:\n{content} ...'}
+            ],
+            temperature=0.0,
+        )
+
+        try:
+            return chat_response.choices[0].message.content
+        except AttributeError:
+            return None
     
     @staticmethod
     def _chunk_text(text: str, chunk_size=2048*32, overlap_tokens=2048*16) -> list[str]:
         """Split text into overlapping chunks based on token count"""
         chunks = []
-        tokenizer = tiktoken.encoding_for_model("gpt-4-turbo")
+        tokenizer = tiktoken.encoding_for_model("gpt-4o")
         tokens = tokenizer.encode(text)
     
         start = 0
@@ -437,7 +471,6 @@ class PMCScanner(LitScanner):
             retmax = self.config.retmax
 
         url = url + f'db=pmc&term={author}[Author]&retmode=json&retmax={retmax}'
-        # print(f'url: {url}')
         response = requests.get(url)
     
         if response.status_code == 200:
@@ -533,7 +566,6 @@ class StringDBScanner(LitScanner):
     
         your_identifiers = protein_name
         protein_query_url = f"https://string-db.org/api/{output_format}/get_string_ids?identifiers={your_identifiers}&{optional_parameters}"
-        # print(f'protein_query_url: {protein_query_url}')
     
         try:
             # Get protein ID from STRING
@@ -569,13 +601,11 @@ class StringDBScanner(LitScanner):
         output_format = "json"
         optional_parameters = ""
         publications_url = "UNKNOWN"
-        # print(f'publications_url: {publications_url}')
     
         try:
             pub_response = requests.get(publications_url)
             pub_response.raise_for_status()
             publications = pub_response.json()
-            # print(f'length of publications: {len(publications)}')
       
         except requests.exceptions.RequestException as e:
             logger.warn(f"Error accessing STRING database: {e}")
@@ -595,16 +625,13 @@ class StringDBScanner(LitScanner):
         output_format = "json"
         optional_parameters = ""
         functional_url = f"https://string-db.org/api/{output_format}/functional_annotation?identifiers={protein_name}&{optional_parameters}"
-        # print(f'functional_url: {functional_url}')
     
         try:
             response = requests.get(functional_url)
             response.raise_for_status()
             functional_data = response.json()
-            # print(f'length of functional_data: {len(functional_data)}')
     
             if not functional_data:
-                # print(f"No functional annotations found for protein: {protein_name}")
                 return []
                 
             return functional_data
@@ -626,16 +653,13 @@ class StringDBScanner(LitScanner):
         output_format = "json"
         optional_parameters = f"limit={limit}"
         interaction_url = f"https://string-db.org/api/{output_format}/interaction_partners?identifiers={protein_name}&{optional_parameters}"
-        # print(f'interaction_url: {interaction_url}')
     
         try:
             response = requests.get(interaction_url)
             response.raise_for_status()
             interaction_partners = response.json()
-            # print(f'length of interaction_partners: {len(interaction_partners)}')
             
             if not interaction_partners:
-                # print(f"No interaction partners found for protein: {protein_name}")
                 return []
                 
             return interaction_partners

@@ -1,5 +1,5 @@
 from configs import LLMConfig, LitScanConfig, PPIScanConfig
-from litscan import Logger, PMCScanner
+from litscan import Logger, PMCScanner, StringDBScanner
 import os
 from time import sleep
 from typing import List
@@ -8,8 +8,9 @@ from litscan import get_string_interaction_partners
 from litscan import get_pmcids
 from litscan import get_pmcids_for_term_and_partner
 
-class Relevancy:
-    def __init__(self, scanner=PMCScanner, logger=Logger, config=Config,
+class PPIRelevancy:
+    def __init__(self, scanner=PMCScanner, stringdb=StringDBScanner, 
+                 logger=Logger, config=LLMConfig,
                  partner_config=PPIScanConfig):
         self.scanner = PMCScanner(logger, config)
         self.pconfig = partner_config
