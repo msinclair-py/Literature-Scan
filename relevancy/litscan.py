@@ -2,7 +2,7 @@ from configs import LLMConfig, LitScanConfig
 import json
 from openai import OpenAI
 import os
-import PyPDF2
+import pymupdf
 import requests
 import subprocess
 import sys
@@ -270,7 +270,6 @@ class LitScanner:
                     #Please respond with 'Yes' or 'No' followed by a brief explanation.\n\nContent: {content}..."},
                 ],
                 temperature=0.0,
-                # max_tokens=2056,
             )
 
             responses.append(chat_response)
@@ -333,7 +332,7 @@ class LitScanner:
             start = end - overlap_tokens
     
         return chunks
-        
+    
     def extract_pdf_text(self, pdf_filename):
         """
         Extracts text content from a PDF file.
@@ -345,16 +344,17 @@ class LitScanner:
             str: Extracted text content from the PDF, or None if extraction fails
         """
         try:
-            with open(pdf_filename, 'rb') as file:
-                pdf_reader = PyPDF2.PdfReader(file)
-                content = ""
-                for page in pdf_reader.pages:
-                    content += page.extract_text()
-                return content if content else None
+            doc = pymupdf.open(pdf_filename)
+            content = ''
+            for page in doc:
+                content += page.get_text().encode('utf8')
+
+            return content if content else None
+
         except Exception as e:
             self.logger.warn(f"Error extracting text from {pdf_filename}: {e}")
             return None
-    
+        
     def extract_html_text(self, html_content):
         """
         Extracts text content from HTML string.

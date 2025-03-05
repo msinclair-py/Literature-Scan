@@ -1,7 +1,7 @@
 from configs import LLMConfig
 from openai import OpenAI
 from pathlib import Path
-import PyPDF2
+import pymupdf
 import tiktoken
 from typing import List, Union
 
@@ -45,19 +45,24 @@ class PDFSummarizer:
 
     def extract_text(self, pdf_path: str, save_text: bool = True) -> str:
         """Extract text content from PDF file and assign to context."""
-        text = ""
-        with open(pdf_path, 'rb') as file:
-            reader = PyPDF2.PdfReader(file)
-            for page in reader.pages:
-                text += page.extract_text()
-        self.context = text
+        context = ''
+        doc = pymupdf.open(pdf_path)
+        txt_path = pdf_path.rsplit('.', 1)[0] + '.txt'
+        out = open(txt_path, 'wb') if save_text else None
+        for page in doc:
+            text = page.get_text().encode('utf8')
+            context += text
+
+            if save_text:
+                out.write(text)
+                out.write(bytes((12,)))
+
+        self.context = context
         
         if save_text:
-            txt_path = pdf_path.rsplit('.', 1)[0] + '.txt'
-            with open(txt_path, 'w', encoding='utf-8') as f:
-                f.write(text)
+            out.close()
 
-        return text
+        return context
 
     def _chunk_text(self, text: str) -> list[str]:
         """Split text into overlapping chunks based on token count"""

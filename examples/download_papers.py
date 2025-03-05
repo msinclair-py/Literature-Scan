@@ -5,8 +5,8 @@ import os
 import pickle
 
 api_key = os.environ.get('OPENAI_API_KEY')
-term = 'NSUN2'
-outdir = 'nsun2_papers'
+term = 'NMNAT2'
+outdir = 'nmnat2_papers'
 pmcids = None # make into a list to pass local papers into this workflow
 questions = [
     #f'Does this paper discuss the {term} protein?',
@@ -33,8 +33,8 @@ lsconfig = LitScanConfig(
 )
 
 os.makedirs(outdir, exist_ok=True)
-logger = Logger(config=cfg)
-scraper = PMCScanner(logger=logger, cfg=cfg, outdir=outdir)
+logger = Logger(config=llmconfig)
+scraper = PMCScanner(logger=logger, cfg=lsconfig, outdir=outdir)
 pmcids = scraper.get_ids(term)
 results = {}
 for pmcid in pmcids:
