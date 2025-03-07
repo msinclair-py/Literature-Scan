@@ -50,11 +50,11 @@ class PDFSummarizer:
         txt_path = pdf_path.rsplit('.', 1)[0] + '.txt'
         out = open(txt_path, 'wb') if save_text else None
         for page in doc:
-            text = page.get_text().encode('utf8')
+            text = page.get_text()
             context += text
 
             if save_text:
-                out.write(text)
+                out.write(text.encode('utf8'))
                 out.write(bytes((12,)))
 
         self.context = context

@@ -347,7 +347,7 @@ class LitScanner:
             doc = pymupdf.open(pdf_filename)
             content = ''
             for page in doc:
-                content += page.get_text().encode('utf8')
+                content += page.get_text()
 
             return content if content else None
 
